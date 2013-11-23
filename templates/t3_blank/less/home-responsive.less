@@ -1,0 +1,86 @@
+/** 
+ *------------------------------------------------------------------------------
+ * @package       T3 Framework for Joomla!
+ *------------------------------------------------------------------------------
+ * @copyright     Copyright (C) 2004-2013 JoomlArt.com. All Rights Reserved.
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
+ * @authors       JoomlArt, JoomlaBamboo, (contribute to this project at github 
+ *                & Google group to become co-author)
+ * @Google group: https://groups.google.com/forum/#!forum/t3fw
+ * @Link:         http://t3-framework.org 
+ *------------------------------------------------------------------------------
+ */
+
+
+// VARIABLES & MIXINS
+// ------------------
+@import "vars.less";
+
+
+//
+// MOBILE
+// -------------------------------------------------------------
+@media (max-width: 767px) {
+
+  // -----------------------------------------------------------
+  // HOME SPOTLIGHTS
+  // -----------------------------------------------------------
+
+  // Spotlight 1 + 5
+  // ---------------
+  .home .t3-sl-1,
+  .home .t3-sl-5 {
+    margin-left: -20px;
+    margin-right: -20px;
+    //jumbotron
+    .jumbotron {
+      padding-top: 30px;
+      padding-bottom: 10px;
+      //jumbotron btn
+      .btn-large {
+        font-size: @baseFontSize + 2;
+        padding: (@baseFontSize - 2px) (@baseFontSize + 2px);
+      }
+    }
+  }
+
+
+  // Spotlight 2
+  // -----------
+  .home .t3-sl-2 {
+    text-align: center;
+    p {
+      font-size: @baseFontSize;
+      line-height: @baseLineHeight;
+    }
+  }
+
+
+  // Spotlight 3 & 4
+  // ---------------
+  .home .t3-sl-3 p img {
+    margin-bottom: 0;
+    margin-top: @T3globalMargin;
+  }
+
+  .home .t3-sl-3,
+  .home .t3-sl-4 {
+    p {
+      font-size: @baseFontSize;
+      line-height: @baseLineHeight;
+    }
+
+    //jumbotron
+    .jumbotron {
+      padding-bottom: 0;
+      h1 {
+        margin-bottom: @T3globalMargin / 2;
+        margin-top: @T3globalMargin / 2;
+      }
+      p {
+        font-size: @baseFontSize;
+      }
+    }
+  }
+
+}

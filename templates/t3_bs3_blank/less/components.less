@@ -1,0 +1,366 @@
+/** 
+ *------------------------------------------------------------------------------
+ * @package       T3 Framework for Joomla!
+ *------------------------------------------------------------------------------
+ * @copyright     Copyright (C) 2004-2013 JoomlArt.com. All Rights Reserved.
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
+ * @authors       JoomlArt, JoomlaBamboo, (contribute to this project at github 
+ *                & Google group to become co-author)
+ * @Google group: https://groups.google.com/forum/#!forum/t3fw
+ * @Link:         http://t3-framework.org 
+ *------------------------------------------------------------------------------
+ */
+ 
+
+// --------------------------------------------------
+// BOOTSTRAP COMPONENTS STYLES
+// --------------------------------------------------
+
+//
+// TITLES
+// --------------------------------------------------
+
+// Page header
+// -----------
+.page-header {
+  padding-bottom: ((@line-height-computed / 2) - 1);
+  margin: 0 0 @line-height-computed;
+  border-bottom: 1px solid @page-header-border-color;
+}
+
+.page-title,
+.page-header h1 {
+  line-height: 1;
+  margin: 0;
+}
+
+
+// Page Subheader
+// --------------
+.page-subheader {
+  border-bottom: 1px solid @t3-border-color;
+  margin: 0 0 @line-height-computed;
+  .clearfix();
+}
+
+.page-subtitle,
+.page-subheader h2 {
+  line-height: 1;
+  margin: 0;
+}
+
+.page-header + .page-subheader {
+  margin-top: -@line-height-computed; //If there is page header, then omit the space before page subheader
+}
+
+
+// Article Header
+// --------------
+.article-header {
+}
+
+.article-title,
+.article-header h1, {
+  margin: 0 0 @line-height-computed 0;
+}
+
+// Smaller "Article Title" in Blog and List layout
+h2.article-title,
+.article-header h2 {
+}
+
+
+// Item Header
+// -----------
+.item-title {
+  font-weight: bold;
+}
+
+
+
+//
+// MASHEAD & JUMBOTRON
+// --------------------------------------------------
+
+// Jumbotron (jumbotron.less)
+// --------------------------
+.jumbotron {
+
+  h1, h2, h3 {
+    margin-top: 0;
+  }
+
+  p {
+    // Remove margin on last paragraph
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .container & {
+    border-radius: @border-radius-large; // Only round corners at higher resolutions if contained in a container
+  }
+
+  @media screen and (min-width: @grid-float-breakpoint) {
+    .container & {
+    }
+    h1 {
+    }
+  }
+
+}
+
+// Mashead
+// --------
+.masthead {
+  padding: (@t3-global-padding * 2) 0;
+  text-align: center;
+
+  p {
+    // Remove margin on last paragraph
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @media screen and (min-width: @grid-float-breakpoint) {
+    padding: (@t3-global-padding * 4) 0;
+
+    h1 {
+      font-size: @font-size-base * 7;
+    }
+
+    p {
+      font-size: @font-size-base * 2;
+    }
+
+    // Bigger mashead btn
+    .btn-lg {
+      margin-top: @line-height-computed;
+      padding: 18px 42px;
+      font-size: @font-size-base * 1.5;
+    }
+  }
+
+}
+
+
+
+//
+// LABELS & BADGES
+// --------------------------------------------------
+
+// Labels (labels.less)
+// --------------------
+
+.label {
+
+  // Add hover effects, but only for links
+  &[href] {
+    &:hover,
+    &:focus {
+    }
+  }
+
+  // Empty labels collapse automatically (not available in IE8)
+  &:empty {
+    display: none;
+  }
+}
+
+// Colors
+// Contextual variations (linked labels get darker on :hover)
+
+.label-default {
+}
+
+.label-primary {
+}
+
+.label-success {
+}
+
+.label-info {
+}
+
+.label-warning {
+}
+
+.label-danger {
+}
+
+
+// Badges (badges.less)
+// --------------------
+
+// Base classes
+.badge {
+
+  // Empty badges collapse automatically (not available in IE8)
+  &:empty {
+    display: none;
+  }
+}
+
+// Hover state, but only for links
+a.badge {
+  &:hover,
+  &:focus {
+  }
+}
+
+// Quick fix for labels/badges in buttons
+.btn .badge {
+  position: relative;
+  top: -1px;
+}
+
+// Quick fix for labels/badges in page-header- NNTH
+.page-header {
+  .label, .badge {
+    vertical-align: middle;
+  }
+}
+
+
+
+//
+// THUMBNAILS  (thumbnails.less)
+// --------------------------------------------------
+
+// Mixin and adjust the regular image class
+.thumbnail {
+  > img {
+  }
+}
+
+// Add a hover state for linked versions only
+a.thumbnail:hover,
+a.thumbnail:focus,
+a.thumbnail.active {
+}
+
+// Image captions
+.thumbnail .caption {
+}
+
+
+
+//
+// ALERTS (alerts.less)
+// --------------------------------------------------
+
+// Base styles
+// -------------------------
+.alert {
+
+  // Headings for larger alerts
+  h4 {
+    color: inherit;
+  }
+
+  // Provide class for links that match alerts
+  .alert-link {
+  }
+
+}
+
+
+// Dismissable alerts
+// ------------------
+.alert-dismissable {
+}
+
+
+// Alternate styles
+// ---------------
+.alert-success {
+}
+
+.alert-info {
+}
+
+.alert-warning {
+}
+
+.alert-danger {
+}
+
+
+
+//
+// MEDIA OBJECTS (media.less)
+// Source: http://stubbornella.org/content/?p=497
+// --------------------------------------------------
+
+// Common styles
+// -------------------------
+.media,
+.media .media {
+}
+
+.media:first-child {
+  margin-top: 0;
+}
+
+.media-object {
+  display: block;
+}
+
+.media-heading {
+  margin: 0 0 5px;
+}
+
+
+// Media image alignment
+// -------------------------
+.media {
+  > .pull-left {
+    margin-right: 10px;
+  }
+  > .pull-right {
+    margin-left: 10px;
+  }
+}
+
+
+// Media list variation
+// -------------------------
+.media-list {
+}
+
+
+
+//
+// WELLS (wells.less)
+// --------------------------------------------------
+// Base class
+.well {
+  blockquote {
+  }
+}
+
+// Sizes
+.well-lg {
+}
+
+.well-sm {
+}
+
+
+
+//
+// TOOLTIPS (tooltips.less)
+// --------------------------------------------------
+
+// Base class
+.tooltip {
+}
+
+// Wrapper for the tooltip content
+.tooltip-inner {
+}
+
+// Arrows
+.tooltip-arrow {
+}

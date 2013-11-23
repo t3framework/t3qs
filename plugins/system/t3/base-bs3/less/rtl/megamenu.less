@@ -1,0 +1,62 @@
+// MEGAMENU RTL override
+// --------------------------------------------------------------
+// 
+html[dir="rtl"] {
+  .t3-megamenu {
+    
+    // Menu alignment
+    // --------------
+    .mega-align-center > .dropdown-menu {
+      .translate(50%, 0);
+    }
+
+    .mega-nav .dropdown-submenu > a:after {
+      direction: ltr;
+    }
+
+    
+    &.animate.zoom {
+      .mega > .mega-dropdown-menu {
+        .transform-origin(80% 20%);
+      }
+
+      //special case for level 0
+      .level0 > .mega-align-center {
+        
+        > .mega-dropdown-menu {
+          -webkit-transform: scale(0, 0) translate(50%, 0);
+              -ms-transform: scale(0, 0) translate(50%, 0);
+                  transform: scale(0, 0) translate(50%, 0);
+          
+          .transform-origin(100% 20%);
+        }
+
+        &.open > .mega-dropdown-menu {
+          -webkit-transform: scale(1, 1) translate(50%, 0);
+              -ms-transform: scale(1, 1) translate(50%, 0);
+                  transform: scale(1, 1) translate(50%, 0);
+        }
+      }
+    }
+
+    &.animate.elastic {
+      
+      .level0 {
+
+        > .mega-align-center {
+          > .mega-dropdown-menu {
+            transform: scale(1,0) translate(50%, 0);
+            -webkit-transform: scale(1,0) translate(50%, 0);
+            -ms-transform: scale(1,0) translate(50%, 0);
+          }
+
+          &.open > .mega-dropdown-menu {
+            transform: scale(1,1) translate(50%, 0);
+            -webkit-transform: scale(1,1) translate(50%, 0);
+            -ms-transform: scale(1,1) translate(50%, 0);
+          }
+        }
+      }
+    }
+  }
+}

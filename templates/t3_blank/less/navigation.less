@@ -1,0 +1,287 @@
+/** 
+ *------------------------------------------------------------------------------
+ * @package       T3 Framework for Joomla!
+ *------------------------------------------------------------------------------
+ * @copyright     Copyright (C) 2004-2013 JoomlArt.com. All Rights Reserved.
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
+ * @authors       JoomlArt, JoomlaBamboo, (contribute to this project at github 
+ *                & Google group to become co-author)
+ * @Google group: https://groups.google.com/forum/#!forum/t3fw
+ * @Link:         http://t3-framework.org 
+ *------------------------------------------------------------------------------
+ */
+
+
+// -------------------------------------------------------
+//  JA MAIN MENU
+// -------------------------------------------------------
+.t3-mainnav {
+  #gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);
+  border-top: 1px solid @navbarBackground;
+  border-bottom: 1px solid darken(@navbarBackground, 10%);
+
+  .navbar {
+    color: @navbarText;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+
+  .navbar-inner {
+    min-height: @navbarHeight;
+    padding:  0;
+    background: transparent;
+    border: 0;
+    border-left: 1px solid darken(@navbarBackground, 5%);
+    .border-radius(0);
+    .box-shadow(none);
+    .reset-filter();
+  }
+
+
+
+  // NAVBAR
+  // -------------------------------------------------------
+  .navbar .nav {
+    margin: 0;
+  }
+
+
+  // Links
+  // -----
+  .navbar .nav > li > a {
+    border-top: 0;
+    border-right: 1px solid darken(@navbarBackground, 5%);
+    padding: ((@navbarHeight - @T3globalPadding) / 2) @T3globalPadding;
+    text-shadow: none;
+  }
+
+  // Hover
+  .navbar .nav > li > a:focus,
+  .navbar .nav > li > a:hover {
+    background-color: @navbarLinkBackgroundHover;
+    #gradient > .vertical(lighten(@navbarLinkBackgroundHover, 10%), @navbarLinkBackgroundHover);
+    text-shadow: none;
+    outline: none;
+  }
+
+  // Active nav items
+  .navbar .nav > .active > a,
+  .navbar .nav > .active > a:hover,
+  .navbar .nav > .active > a:focus {
+    color: @navbarLinkColorActive;
+    text-shadow: none;
+    #gradient > .vertical(lighten(@navbarLinkBackgroundActive, 10%), @navbarLinkBackgroundActive);
+    .box-shadow (none);
+    outline: none;
+  }
+
+  // Toggle Button
+  // -------------
+
+  // Navbar button for toggling navbar items in responsive layouts
+  // These definitions need to come after '.navbar .btn'
+  .navbar .btn-navbar {
+    float: left;
+    padding: 5px 10px;
+    margin: 4px @T3globalMargin 4px;
+    .buttonBackground(darken(@navbarBackgroundHighlight, 5%), darken(@navbarBackground, 5%));
+    .box-shadow(~"inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.075)");
+    
+    // The icon
+    [class^="icon-"],
+    [class^=" icon-"] {
+      color: @navbarText;
+      text-shadow: none;
+    }
+  }
+
+
+  // DROPDOWN
+  // -------------------------------------------------------
+
+  // Dropdown arrow/caret
+  // --------------------
+  .caret {
+  }
+
+  // Place the caret
+  .dropdown .caret {
+    margin-left: 5px;
+  }
+
+
+  // The dropdown menu
+  // -----------------
+  .dropdown-menu {
+    .box-shadow(0 5px 10px rgba(0,0,0,.2));
+
+    // Links within the dropdown menu
+    li > a {
+      border-top: 1px solid @hrBorder;
+      padding: 5px 20px;
+      text-shadow: none;
+    }
+  }
+
+  // No border top on the first
+  .dropdown-menu li:first-child > a {
+    border-top: 0;
+  }
+
+  // Hide the Top arrow of the dropdown menu.
+  // See bootstrap/navbar.less or comment these line if you want to show it again.
+  .navbar .nav > li > .dropdown-menu {
+    &:before {
+      display: none;
+    }
+    &:after {
+      display: none;
+    }
+  }
+
+
+  // Hover state
+  // -----------
+  .dropdown-menu li > a:hover,
+  .dropdown-menu li > a:focus,
+  .dropdown-submenu:hover > a {
+  }
+
+
+  // Active state
+  // ------------
+  .dropdown-menu .active > a,
+  .dropdown-menu .active > a:hover {
+  }
+
+
+  // Disabled state
+  // --------------
+  .dropdown-menu .disabled > a,
+  .dropdown-menu .disabled > a:hover {
+    color: @grayLight;
+  }
+
+  .dropdown-menu .disabled > a:hover {
+    background-color: transparent;
+  }
+
+
+  // Open State
+  // ----------
+  .nav li.dropdown.open > .dropdown-toggle {
+    background-color: @dropdownLinkBackgroundHover;
+    color: @dropdownLinkColorHover;
+  }
+
+  // Active Open
+  .nav li.dropdown.active > .dropdown-toggle,
+  .nav li.dropdown.open.active > .dropdown-toggle {
+    background-color: @dropdownLinkBackgroundActive;
+    color: @dropdownLinkColorActive;
+  }
+
+  // The Caret
+  .nav li.dropdown > .dropdown-toggle .caret {
+  }
+
+  .nav li.dropdown.open > .dropdown-toggle .caret,
+  .nav li.dropdown.active > .dropdown-toggle .caret,
+  .nav li.dropdown.open.active > .dropdown-toggle .caret {
+  }
+
+
+  // Dropdown Sub menus
+  // ------------------
+  .dropdown-submenu > .dropdown-menu {
+  }
+
+  .dropdown-submenu > a:after {
+  }
+
+  .dropdown-submenu:hover > a:after {
+  }
+  // End 
+}
+
+
+
+// ------------------------------------------------------
+// JA MAIN MENU (Inverted)
+// -------------------------------------------------------
+.T3Navbar() when (@T3NavbarInverted = 1) {
+
+  // Begin: Mixin Styling
+  #gradient > .vertical(@grayDark, @grayDarker);
+  border-top: 1px solid @grayDark;
+  border-bottom: 1px solid @grayDark;
+  
+  .navbar {
+    color: @grayLighter;
+  }
+
+  .navbar-inner {
+    border-left: 1px solid @grayDark;
+  }
+
+
+  // NAVBAR
+  // -------------------------------------------------------
+
+  // Links
+  // -----
+  .navbar .nav > li > a {
+    color: @grayLighter;
+    border-right: 1px solid @grayDark;
+  }
+
+  // Hover
+  .navbar .nav > li > a:focus,
+  .navbar .nav > li > a:hover {
+    background-color: lighten(@grayDark, 10%);
+    #gradient > .vertical(lighten(@grayDark, 20%), lighten(@grayDark, 10%));
+  }
+
+  // Active nav items
+  .navbar .nav > .active > a,
+  .navbar .nav > .active > a:hover,
+  .navbar .nav > .active > a:focus {
+    color: @white;
+    #gradient > .vertical(lighten(@linkColor, 10%), @linkColor);
+  }
+
+
+  // DROPDOWN
+  // -------------------------------------------------------
+
+  // The dropdown menu
+  // -----------------
+  .dropdown-menu {
+    background-color: lighten(@grayDark, 10%);
+    border: 1px solid lighten(@grayDark, 20%);
+
+    // Links within the dropdown menu
+    li > a {
+    color: @grayLighter;
+    border-top: 1px solid lighten(@grayDark, 20%);
+    }
+  }
+
+  // Open dropdown
+  .nav li.dropdown.open > .dropdown-toggle,
+  .nav li.dropdown.active > .dropdown-toggle,
+  .nav li.dropdown.open.active > .dropdown-toggle {
+    #gradient > .vertical(lighten(@linkColor, 10%), @linkColor);
+  }
+  // End: Mixin Styling
+}
+
+.T3Navbar() when (@T3NavbarInverted = 0) {
+  // Leave blank here because we will use the default style.
+}
+
+// Calling the styles
+.t3-mainnav {
+  .T3Navbar();
+}
+

@@ -1,0 +1,1362 @@
+/** 
+ *------------------------------------------------------------------------------
+ * @package       T3 Framework for Joomla!
+ *------------------------------------------------------------------------------
+ * @copyright     Copyright (C) 2004-2013 JoomlArt.com. All Rights Reserved.
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
+ * @authors       JoomlArt, JoomlaBamboo, (contribute to this project at github 
+ *                & Google group to become co-author)
+ * @Google group: https://groups.google.com/forum/#!forum/t3fw
+ * @Link:         http://t3-framework.org 
+ *------------------------------------------------------------------------------
+ */
+
+
+// ---------------------------------------------------------
+// GENERIC ARTICLE STYLES
+// ---------------------------------------------------------
+
+//
+// Articles Layout
+// --------------------------------------------------------
+.blog {
+}
+
+// Home Blog
+.blog-featured {
+}
+
+// Leading Article Rows
+.items-leading {
+}
+
+.items-leading .leading {
+  margin-bottom: @t3-global-margin * 2;
+}
+
+// Article Rows
+.items-row {
+}
+
+.items-row .item {
+  margin-bottom: @t3-global-margin * 2;
+}
+
+// Divider
+.divider-vertical {
+  margin: 0 0 (@t3-global-margin * 2);
+  border: 0;
+  border-top: 1px solid @hr-border;
+  border-bottom: 1px solid @white;
+}
+
+
+// Article Aside
+// -------------------------
+.article-aside {
+  color: @gray-light;
+  font-size: @t3-font-size-small;
+  margin-bottom: @t3-global-margin;
+}
+
+.article-info {
+  margin: 0;
+  width: 85%;
+
+  a {
+    // Link states
+    &:hover, &:focus, &:active {
+    }
+  }
+  
+  .article-info-term {
+    display: none;
+  }
+  
+  dd {
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 10px;
+    white-space: nowrap;
+    strong {
+      font-weight: bold;
+    }
+  }
+
+}
+
+// Author
+.createdby {
+}
+
+// Category Name
+.category-name {
+}
+
+// URL
+.article-url {
+}
+
+// Publish Date
+.published {
+}
+
+// Modified Date
+.modifydate {
+}
+
+// Article Desciption
+.contentdescription {
+}
+
+.contentdescription p {
+}
+
+
+// Article Footer
+// -------------------------
+.article-footer {
+  color: @gray-light;
+  font-size: @font-size-small;
+  margin-bottom: @t3-global-margin;
+}
+
+
+// Article Images
+// -------------------------
+
+.article-intro,
+.article-content {
+
+  // Make the image reponsive.
+  // Remove if you don't want article images to be responsived.
+  img {
+    .img-responsive();
+  }
+
+  // Add proper margin
+  img[align=left],
+  .img_caption.left,
+  .pull-left.item-image {
+    margin: 0 @t3-global-margin @t3-global-margin 0;
+  }
+
+  img[align=right],
+  .img_caption.right,
+  .pull-right.item-image {
+    margin: 0 0 @t3-global-margin @t3-global-margin;
+  }
+
+}
+
+.img-intro-none,
+.img-intro-left,
+.img-intro-right,
+.img-fulltext-none,
+.img-fulltext-left,
+.img-fulltext-right,
+.img_caption {
+  position: relative;
+}
+
+.img-intro-none,
+.img-intro-left,
+.img-intro-right,
+.img-fulltext-none,
+.img-fulltext-left,
+.img-fulltext-right,
+.img_caption {
+  margin-bottom: @t3-global-margin;
+  max-width: 100%;
+}
+
+.img-fulltext-left {
+  float: left;
+  margin-right: @t3-global-margin;
+}
+
+.img-fulltext-right {
+  float: right;
+  margin-left: @t3-global-margin;
+}
+
+.img-intro-none img,
+.img-intro-left img,
+.img-intro-right img,
+.img-fulltext-none img,
+.img-fulltext-left img,
+.img-fulltext-right img {
+  margin: 0;
+}
+
+// Image caption
+.img_caption img {
+  margin-bottom: 1px !important;
+}
+
+.img_caption p.img_caption {
+  background: @gray-lighter;
+  color: @gray;
+  font-size: @font-size-small;
+  width: 100%;
+  margin: 0;
+  padding: 5px;
+  text-align: center;
+  clear: both;
+}
+
+
+// Reponsive Article Images
+// -------------------------
+
+// Mobile
+// ------
+@media (max-width: @screen-xs-max) {
+
+  article img[align=left], .img_caption.left,
+  article img[align=right], .img_caption.right,
+  .img-fulltext-left, .img-fulltext-right {
+    float: none !important;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100% !important;
+  }
+
+}
+
+
+// Article Actions
+// -------------------------
+article aside .btn-group {
+  .dropdown-menu {
+  }
+  
+  > .dropdown-toggle,
+  > .dropdown-toggle:hover,
+  > .dropdown-toggle:active,
+  > .dropdown-toggle:focus {
+    padding: 2px 5px;
+  }
+
+  > .dropdown-toggle .caret {
+    margin-left: 2px;
+  }
+}
+
+
+
+
+// ---------------------------------------------------------
+// ROW LISTS
+// ---------------------------------------------------------
+// List types using in Joomla! Core
+
+// Alternating Rows
+.row-even,
+.row-odd {
+  padding: 5px;
+  width: 99%;
+  border-bottom: 1px solid @table-border-color;
+}
+
+.row-odd {
+  background-color: @table-bg;
+}
+
+.row-even {
+  background-color: @table-bg-accent;
+}
+
+.blog-row-rule,
+.blog-item-rule {
+  border: 0;
+}
+
+// Row reveal
+.row-fluid .row-reveal {
+  visibility: hidden;
+}
+
+.row-fluid:hover .row-reveal {
+  visibility: visible;
+}
+
+// Nav List Offset
+.nav-list > li.offset > a {
+  padding-left: 30px;
+  font-size: 12px;
+}
+
+
+// Striped
+// -------
+.list-striped,
+.row-striped {
+  list-style: none;
+  line-height: @line-height-computed;
+  text-align: left;
+  vertical-align: middle;
+  border-top: 1px solid @table-border-color;
+  margin-left: 0;
+}
+
+.list-striped li,
+.list-striped dd,
+.row-striped .row,
+.row-striped .row-fluid {
+  border-bottom: 1px solid @table-border-color;
+  padding: 10px 15px;
+}
+
+.list-striped li:nth-child(odd),
+.list-striped dd:nth-child(odd),
+.row-striped .row:nth-child(odd),
+.row-striped .row-fluid:nth-child(odd) {
+  background-color: @table-bg-accent;
+}
+
+.list-striped li:hover,
+.list-striped dd:hover,
+.row-striped .row:hover,
+.row-striped .row-fluid:hover {
+  background-color: @table-bg-hover;
+}
+
+.row-striped .row-fluid {
+  width: 97%; // lower than 100% since we have padding
+}
+
+.row-striped .row-fluid [class*="span"] {
+  min-height: 10px;
+}
+
+.row-striped .row-fluid [class*="span"] {
+  margin-left: 8px;
+}
+
+.row-striped .row-fluid [class*="span"]:first-child {
+  margin-left: 0;
+}
+
+
+// Condensed
+// ---------
+.list-condensed {
+  li {
+    padding: 5px 10px;
+  }
+}
+
+.row-condensed {
+  .row, .row-fluid {
+    padding: 5px 10px;
+  }
+}
+
+
+// Bordered
+// --------
+.list-bordered,
+.row-bordered {
+  list-style: none;
+  line-height: 18px;
+  text-align: left;
+  vertical-align: middle;
+  margin-left: 0;
+  border: 1px solid @table-border-color;
+}
+
+
+
+// ---------------------------------------------------------
+// COMMON JOOMLA STYLES
+// ---------------------------------------------------------
+
+//
+// LOGIN
+// ---------------------------------------------------------
+.login h1 {
+}
+
+.login_form fieldset,
+.login fieldset {
+  padding: 15px 0 0;
+}
+
+.login_form fieldset p,
+.login fieldset p {
+  margin: 0 0 5px;
+}
+
+.login_form label,
+.login label {
+  display: block;
+  font-weight: bold;
+}
+
+.login-fields {
+  margin: 0 0 10px;
+}
+
+.login_form .input,
+.login_form .inputbox,
+.login-fields .required {
+  margin-left: 10px;
+  width: 150px;
+}
+
+.login_form .remember .input,
+.login_form .remember .inputbox {
+  width: 20px;
+}
+
+.login_form .btn,
+.login_form .button,
+.login button {
+}
+
+
+
+//
+// REGISTER
+// ---------------------------------------------------------
+.form-register {
+  fieldset {
+    padding: 0 0 10px;
+  }
+
+  p {
+    margin: 0 0 5px;
+  }
+
+  p.form-des {
+    margin: 15px 0;
+  }
+
+  label {
+    display: block;
+    float: left;
+    font-weight: bold;
+    text-align: right;
+    width: 130px;
+  }
+
+  .input,
+  .inputbox {
+    margin-left: 10px;
+    width: 200px;
+  }
+
+  .btn,
+  .button {
+    margin-left: 140px;
+  }
+}
+
+.registration fieldset dt {
+  margin-right: 5px;
+}
+
+.admintable textarea {
+  max-width: 90% !important;
+  resize: none;
+}
+
+
+
+//
+// MAILTO WINDOWS
+// ---------------------------------------------------------
+.com_mailto {
+  body {
+    padding: @t3-global-padding / 2;
+  }
+
+  .t3-mainbody {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .t3-content {
+    width: auto;
+  }
+}
+
+#mailto-window {
+  background: #fff;
+  margin: 10px 0 20px;
+  padding: 0;
+  position: relative;
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  
+  .mailto-close {
+    a {
+      :hover {
+
+      }
+    }
+  }
+}
+
+#mailtoForm {
+  .formelm {
+    padding: 5px 0;
+    vertical-align: middle;
+    overflow: hidden;
+  }
+  
+  .formelm label {
+    display: inline-block;
+    float: left;
+    font-weight: bold;
+    vertical-align: middle;
+    width: 100px;
+  }
+  
+  p {
+    margin-top: 20px;
+  }
+  
+  .input,
+  .inputbox {
+    width: 65%;
+  }
+  
+  .btn,
+  .button,
+  button {
+    margin-right: 5px;
+  }
+}
+
+
+
+//
+// USERS
+// ---------------------------------------------------------
+.user-details {
+  padding: 10px 0;
+
+  p {
+    margin: 0 0 5px;
+  }
+  
+  label {
+    display: block;
+    float: left;
+    font-weight: bold;
+    text-align: right;
+    width: 130px;
+  }
+  
+  .input,
+  .inputbox {
+    margin-left: 10px;
+    width: 200px;
+  }
+  
+  .btn,
+  button {
+    margin-left: 140px;
+  }
+  
+  .paramlist {
+    .paramlist_key {
+      padding: 0 0 5px;
+      width: 130px;
+    }
+    
+    .paramlist_value {
+      padding: 0 0 5px;
+    }
+  }
+  
+  .user_name span {
+    font-weight: bold;
+    padding-left: 10px;
+  }
+}
+
+
+// Reset & Remind
+// --------------
+.reset .form-validate p,
+.remind .form-validate p {
+  background: @gray-lighter;
+  border: 1px solid @t3-border-color;
+  margin-bottom: @t3-global-margin;
+  padding: (@t3-global-padding / 2) @t3-global-padding;
+  border-radius: @border-radius-base;
+}
+
+.reset .form-validate fieldset dl,
+.remind .form-validate fieldset dl {
+  margin: 0;
+}
+
+.reset .form-validate fieldset dt,
+.remind .form-validate fieldset dt {
+  margin: 4px 0 0 0;
+}
+
+
+// Profile
+//---------
+.profile .dl-horizontal {
+  dd {
+  }
+  
+  dt {
+  }
+}
+
+
+// Edit Profile
+// ------------
+.profile-edit {
+  input {
+    .make-sm-column(4, @padding-base-horizontal);  // Make the input have the same width
+  }
+  select {
+    .make-sm-column(6, @padding-base-horizontal);  // Make the select have the same width
+  }
+}
+
+
+//
+// SEARCH
+// ---------------------------------------------------------
+.search {
+}
+
+.searchintro {
+}
+
+
+// Search Form
+// -----------
+#searchForm {
+  padding: (@t3-global-padding / 2) @t3-global-padding;
+  border: 1px solid @t3-border-color;
+  background: @gray-lighter;
+  border-radius: @border-radius-base;
+  .clearfix();
+  fieldset {
+    margin: @t3-global-margin 0;
+  }
+
+  legend {
+    margin-bottom: @t3-global-margin / 2;
+  }
+}
+
+.phrases-box input,
+.phrases-box label,
+.form-limit input,
+.form-limit label,
+.only label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.phrases-box input {
+  margin: 0;
+}
+
+
+// Search Result
+// -------------
+.search-results {
+  margin-top: @t3-global-margin;
+
+  // Title
+  .result-title {
+    font-size: @t3-font-size-bigger;
+    margin-top: @t3-global-margin;
+  }
+
+  // Category
+  .result-category {
+    font-size: @t3-font-size-smaller;
+    color: @gray-light;
+  }
+
+  // Result Text
+  .result-text {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  // Date
+  .result-created {
+    font-size: @t3-font-size-smaller;
+    color: @gray-light;
+  }
+
+  // Higlight
+  .highlight {
+  }
+}
+
+
+
+//
+// SMART SEARCH
+// ---------------------------------------------------------
+.finder {
+
+  #search-form {
+  }
+
+  #advancedSearch {
+  }
+
+
+  // The Form
+  // --------
+  #finder-search {
+  }
+
+
+}
+
+
+
+//
+// CONTACT
+// ---------------------------------------------------------
+.contact {}
+
+.contact .accordion-heading .accordion-toggle {
+  font-weight: bold;
+}
+
+
+
+//
+// ARCHIVED ITEMS
+// ---------------------------------------------------------
+#archive-items > li {
+  line-height: normal;
+  margin: 0;
+  overflow: visible;
+  padding: 0;
+}
+
+#archive-items div.intro {
+  clear: both;
+  overflow: hidden;
+}
+
+
+
+//
+// CATEGORY LIST
+// ---------------------------------------------------------
+.categories-list {
+}
+
+.category-desc {
+}
+
+
+// Sub Category List
+// -----------------
+.category-item {
+  margin-top: @t3-global-margin;
+  .clearfix();
+
+  .page-header {
+    line-height: normal;
+    padding-bottom: @t3-global-padding/4;
+    margin: 0 0 @t3-global-margin/4;
+  }
+  // Sub Categories
+  .category-item {
+    margin-left: @grid-gutter-width;
+  }
+}
+
+
+
+//
+// NEWS FEEDS
+// ---------------------------------------------------------
+
+// Feed categories
+// ---------------
+.newsfeed-category,
+.newsfeed {
+  > h2 {
+    border-bottom: 1px solid @t3-border-color;
+    padding-bottom: @t3-global-padding;
+    margin-bottom: @t3-global-margin;
+    margin-top: 0;
+  }
+
+  .category-desc {
+    margin-bottom: @t3-global-margin;
+  }
+  
+  .category {
+    li {
+      .clearfix();
+    }
+  }
+}
+
+
+// Feeds item
+// ----------
+.newsfeed {
+  > h2 {
+    border-bottom: 1px solid @t3-border-color;
+    padding-bottom: @t3-global-padding;
+    margin-bottom: @t3-global-margin;
+    margin-top: 0;
+  }
+
+  .feed-description {
+    margin-bottom: @t3-global-margin;
+    font-size: @t3-font-size-bigger;
+  }
+  
+  .feed-item-description .feed-description {
+    font-size: @font-size-base;
+  }
+  
+  ol li > a {
+    font-weight: bold;
+    font-size: @t3-font-size-bigger;
+  }
+}
+
+
+
+//
+// EDIT & SUBMIT ARTICLE FORM
+// ---------------------------------------------------------
+.edit {
+
+  fieldset {
+  }
+  
+  fieldset legend {
+  }
+  
+  label {
+  }
+
+  .inputbox,
+  input[type="text"] {
+    @media (min-width: @screen-sm) {
+      width: 250px;
+    }
+  }
+
+  select,
+  select.inputbox {
+    @media (min-width: @screen-sm) {
+      width: 250px;
+    }
+  }
+
+  textarea {
+    width: 100%;
+  }
+
+  .input-append,
+  .input-prepend {
+    display: block;
+    width: auto;
+    @media (min-width: @screen-sm) {
+      input[type="text"],
+      input.inputbox {
+        display: inline-block;
+        width: 210px;
+      }
+    }
+  }
+
+}
+
+
+// Tabs
+// -----------------------
+.edit {
+  .nav-tabs {
+    margin-bottom: @t3-global-margin;
+  }
+}
+
+
+
+// Editor Buttons
+// ----------------------
+#editor-xtd-buttons {
+  margin-top: @line-height-computed;
+  margin-bottom: @line-height-computed;
+
+  .btn {
+    background: @gray-lighter;
+  }
+}
+
+
+// Lagacy class for Joomla 2.5
+.button2-left,
+.button2-left div {
+  float: left;
+}
+
+.button2-right,
+.button2-right div {
+  float: right;
+}
+
+.button2-left {
+  margin: 5px 5px 0 0;
+}
+
+.button2-right {
+  margin: 5px 0 0 5px;
+}
+
+.button2-left a,
+.button2-right a,
+.button2-left span,
+.button2-right span {
+  background: @gray-lighter;
+  border: 1px solid darken(@gray-lighter, 5%);
+  color: @gray-light;
+  cursor: pointer;
+  display: block;
+  float: left;
+  padding: 2px 10px;
+  border-radius: @border-radius-base;
+}
+
+.button2-left span,
+.button2-right span {
+  color: @gray-light;
+  cursor: default;
+}
+
+.button2-left .page a,
+.button2-right .page a,
+.button2-left .page span,
+.button2-right .page span {
+  padding: 0 6px;
+}
+
+.button2-left a:hover,
+.button2-right a:hover {
+  background: darken(@gray-lighter, 5%);
+  color: @gray-dark;
+  text-decoration: none;
+}
+
+.button2-left {
+  .image {
+  }
+  
+  .readmore {
+  }
+  
+  .pagebreak {
+  }
+}
+
+.edit.item-page .control-group a.modal {
+  position: inherit;
+  width: auto !important;
+  margin-left: 0 !important;
+  top: auto !important;
+}
+
+
+// Calendar Button
+.controls img.calendar {
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+
+
+// 
+// CONTENT NAVIGATIONS
+// ---------------------------------------------------------
+
+//  Pagebreak Nav
+// --------------
+.article-content .pagination {
+
+  ul {
+    border-left: 1px solid @t3-border-color;
+  }
+  
+  li {
+    float: left;
+    padding: (@t3-global-padding / 2) @t3-global-padding;
+    line-height: normal;
+    border: 1px solid @t3-border-color;
+    border-left: 0;
+    // Hover state
+    &:hover {
+    }
+  }
+
+  li a {
+    border: 0;
+    text-decoration: none;
+    background-color: transparent;
+    line-height: normal;
+    padding: 0;
+    // Link States
+    &:hover, &:focus, &:active {
+    }
+  }
+}
+
+.pagenavcounter {
+  margin: 0 0 @t3-global-margin;
+  font-weight: bold;
+}
+
+
+// PageBreak Index
+// ---------------
+#article-index,
+.article-index {
+  margin: 0 0 @t3-global-margin @t3-global-margin;
+  padding: 10px;
+  width: 25%;
+  border: 1px solid @t3-border-color;
+  border-radius: @border-radius-base;
+  
+  ul {
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+    > li {
+      border: 0;
+      margin-top: 2px;
+    }
+
+    // Link
+    > li > a {
+      border: 0;
+      padding: 5px;
+      border-radius: @nav-pills-border-radius;
+      // Link states
+      &:hover, &:active, &:focus {
+      }
+    }
+
+    // Active
+    > .active > a {
+      border: 0;
+      background: @nav-pills-active-link-hover-bg;
+      color: @nav-pills-active-link-hover-color;
+      // Link states
+      &:hover, &:active, &:focus {
+        border: 0;
+        background: @nav-pills-active-link-hover-bg;
+        color: @nav-pills-active-link-hover-color;
+      }
+    }
+
+  }
+}
+
+
+// Articles Navigation
+// -------------------
+.pagenav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    margin: 0;
+    padding: 0;
+    float: left;
+  }
+  
+  > li.pagenav-prev,
+  > li.previous {
+    margin-right: 10px;
+  }
+  
+  > li.pagenav-next,
+  > li.next {
+  }
+
+  li > a {
+    padding: (@t3-global-padding / 2) @t3-global-padding;
+    line-height: normal;
+    border: 1px solid @pagination-border;
+    border-radius: @border-radius-base;
+    &:hover, &:active, &:focus {
+      background-color: @pagination-hover-bg;
+    }
+  }
+
+}
+
+
+// Items More
+// -----------
+.items-more {
+  h3 {
+    margin: 0 0 @t3-global-margin;
+  }
+  
+  .nav {
+    > li {
+      border-top: 1px solid @t3-border-color;
+    }
+    > li > a {
+      padding: @padding-base-vertical 5px;
+    }
+  }
+}
+
+
+// Back Buttons
+// -----------
+.back_button a {
+  display: block;
+  margin: 10px 0;
+  // Link states
+  &:hover, &:focus, &:active {
+  }
+}
+
+
+// Form Control
+// ------------
+.filters {
+  margin: (@t3-global-margin / 2) 0 5px;
+}
+
+.display-limit {
+  margin: (@t3-global-margin / 2) 0 5px;
+}
+
+.filters .filter-search {
+  
+}
+
+.filters .display-limit {
+  float: right;
+  text-align: right;
+}
+
+
+
+
+// ---------------------------------------------------------
+// MESSAGES & NOTIFICATIONS
+// ---------------------------------------------------------
+
+//
+// MESSAGES
+// ---------------------------------------------------------
+#system-message {
+  dt {
+    font-weight: bold;
+  }
+  
+  dd {
+    font-weight: bold;
+  }
+
+  dd.message ul,
+  dd.error ul,
+  dd.notice ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+  dd.message ul li,
+  dd.error ul li,
+  dd.notice ul li {
+    background: none;
+    margin: 0;
+    padding: 5px;
+  }
+}
+
+
+// System Standard Messages
+// ------------------------
+#system-message dd.message ul {
+}
+
+// System Error Messages
+// ---------------------
+.error {
+}
+
+.error h2 {
+}
+
+#system-message dd.error ul {
+}
+
+
+// System Notice Messages
+// ----------------------
+#system-message dd.notice ul {
+}
+
+
+.alert-message {
+  .alert-variant(@alert-success-bg; @alert-success-border; @alert-success-text);
+}
+.alert-notice {
+  .alert-variant(@alert-info-bg; @alert-info-border; @alert-info-text);
+}
+.alert-error {
+  .alert-variant(@alert-danger-bg; @alert-danger-border; @alert-danger-text);
+}
+
+
+//
+// Tooltips
+// ---------------------------------------------------------
+.tip-wrap {
+  background: #fff6df;
+  border: 1px solid #fb3;
+  border-radius: 5px;
+  .box-shadow (none);
+  max-width: 300px;
+  z-index: 999;
+}
+
+.tip-title {
+  border-bottom: 1px solid #fb3;
+  font-weight: bold;
+  padding: 5px 10px;
+}
+
+.tip-text {
+  font-size: @font-size-base;
+  margin: 0;
+  padding: 5px 10px;
+}
+
+.hasTip img {
+  border: none;
+  margin: 0 5px 0 0;
+}
+
+
+
+
+// ---------------------------------------------------------
+// JOOMLA 3.0 EXTENDING BOOTSTRAP
+// ---------------------------------------------------------
+
+// Specific Widths
+.width-10 { width: 10px; }
+
+.width-20 { width: 20px; }
+
+.width-30 { width: 30px; }
+
+.width-40 { width: 40px; }
+
+.width-50 { width: 50px; }
+
+.width-60 { width: 60px; }
+
+.width-70 { width: 70px; }
+
+.width-80 { width: 80px; }
+
+.width-90 { width: 90px; }
+
+.width-100 { width: 100px; }
+
+
+// Specific Heights
+.height-10 { height: 10px; }
+
+.height-20 { height: 20px; }
+
+.height-30 { height: 30px; }
+
+.height-40 { height: 40px; }
+
+.height-50 { height: 50px; }
+
+.height-60 { height: 60px; }
+
+.height-70 { height: 70px; }
+
+.height-80 { height: 80px; }
+
+.height-90 { height: 90px; }
+
+.height-100 { height: 100px; }
+
+
+// iFrames
+.iframe-bordered {
+  border: 1px solid @table-border-color;
+}
+
+
+// Fixed for Chosen
+.chzn-container {
+  display: block;
+}
+
+.chzn-container-single .chzn-single,
+.chzn-container-multi .chzn-choices .search-field input,
+.chzn-container-single .chzn-search input {
+  height: 26px;
+}
+
+.chzn-container-single .chzn-drop,
+.chzn-container .chzn-drop {
+  .box-sizing (content-box) !important;
+}
+
+// Input Prepend Chosen Select Boxes
+.input-prepend .chzn-container-single .chzn-single {
+  border-color: @input-border;
+  height: 26px;
+  border-radius: 0 3px 3px 0;
+  .box-shadow(none);
+}
+
+.input-prepend .chzn-container-active .chzn-single-with-drop {
+  border-radius: 0 3px 0 0;
+}
+
+.input-prepend .chzn-container-single .chzn-drop{
+  border-color: @input-border;
+}
+
+// Chosen proper wrapping in Bootstrap btn-group
+.btn-group .chzn-results {
+  white-space: normal;
+}
+
+//Language 
+.languageswitcherload {
+  float: right;
+  width: 100%;
+  .mod-languages {
+    text-align: right;
+  }
+}
+

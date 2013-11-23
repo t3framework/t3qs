@@ -1,0 +1,125 @@
+/** 
+ *------------------------------------------------------------------------------
+ * @package       T3 Framework for Joomla!
+ *------------------------------------------------------------------------------
+ * @copyright     Copyright (C) 2004-2013 JoomlArt.com. All Rights Reserved.
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
+ * @authors       JoomlArt, JoomlaBamboo, (contribute to this project at github 
+ *                & Google group to become co-author)
+ * @Google group: https://groups.google.com/forum/#!forum/t3fw
+ * @Link:         http://t3-framework.org 
+ *------------------------------------------------------------------------------
+ */
+
+@media (max-width: @navbarCollapseWidth) {
+  body {
+    padding-top: 50px;
+  }
+} 
+
+//
+// MOBILE
+// -------------------------------------------------------------
+@media (max-width: 767px) {
+
+  // HEADER
+  // ---------------------------------------------------------
+  // Logo
+  // ----
+  .logo {
+    float: left !important;
+    text-align: center;
+    width: 100% !important;
+  }
+
+  // Head Search
+  // -----------
+  .head-search {
+    float: left !important;
+    margin-top: @T3globalMargin;
+    margin-left: 0 !important;
+    width: 100% !important;
+
+    form {
+      float: none;
+    }
+  
+    .input {
+      width: 100%;
+      .box-sizing(border-box);
+      height: 30px;
+      // focus state
+      &:focus {
+        width: 100%;
+      }
+    }
+  
+  }
+
+  .t3-header .span8, 
+  .t3-header .span4 {
+    width: 100% !important;
+    margin-left: 0 !important;
+    float: none;
+  } 
+
+  .languageswitcherload{
+    float: left;
+    .mod-languages {
+      text-align: right;
+    }
+  }
+
+
+  // SPOTLIGHTS
+  // ---------------------------------------------------------
+  .t3-sl {
+    padding-bottom: @T3globalPadding;
+    padding-top: @T3globalPadding;
+  }
+
+
+  // FOOTER
+  // ---------------------------------------------------------
+  .t3-footer {
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+
+  // Footnav
+  // -------
+  .t3-footnav {
+    padding: @T3globalPadding 20px 0;
+    font-size: @T3smallerFontSize;
+  }
+
+  .t3-footnav .module-title {
+    font-size: @baseFontSize;
+    font-weight: bold;
+  }
+
+  // Copyright
+  // ---------
+  .t3-copyright {
+    padding: @T3globalPadding 20px (@T3globalPadding * 2);
+    .clearfix();
+  }
+
+  .copyright,
+  .poweredby {
+    float: none;
+    display: inline-block;
+    text-align: center;
+  }
+
+  .poweredby {
+    margin-top: @T3globalMargin / 2;
+    .t3-logo,
+    .t3-logo-small {
+      float: none;
+      display: inline-block;
+    }
+  }
+  //End
+
+}
