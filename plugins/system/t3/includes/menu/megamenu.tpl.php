@@ -98,7 +98,7 @@ class T3MenuMegamenuTpl
 		$setting = isset($vars['setting']) ? $vars['setting'] : array();
 		$width   = isset($setting['width']) ? $setting['width'] : T3_BASE_MAX_GRID;
 		$data    = "data-width=\"$width\"";
-		$cls     = ($vars['menu']->editmode ? 'span' : T3_BASE_WIDTH_PREFIX) . $width;
+		$cls     = ($vars['menu']->editmode ? 'span' : T3_BASE_NONRSP_WIDTH_PREFIX) . $width;
 
 		if (isset($setting['position'])) {
 			$cls  .= " mega-col-module";
@@ -135,7 +135,7 @@ class T3MenuMegamenuTpl
 
 		if ($item->mega)  $cls .= ' mega';
 		if ($item->group) $cls .= ' mega-group';
-		if ($item->type == 'separator') $cls .= ' divider';
+		if ($item->type == 'separator' && !$item->group && !$item->mega) $cls .= ' divider';
 
 		$data = "data-id=\"{$item->id}\" data-level=\"{$item->level}\"";
 		if ($item->group) $data .= " data-group=\"1\"";
@@ -184,6 +184,10 @@ class T3MenuMegamenuTpl
 			$vars['caret']     = '<b class="caret"></b>';
 		}
 
+		if($item->group){
+			$vars['class']    .= ' dropdown-header mega-group-title';
+		}
+
 		if ($item->menu_image) {
 			$item->params->get('menu_text', 1) ?
 				$vars['linktype'] = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" /><span class="image-title">' . $item->title . '</span> ' :
@@ -211,10 +215,6 @@ class T3MenuMegamenuTpl
 			case 'url':
 			default:
 				$html = self::item_url($vars);
-		}
-
-		if($item->group){
-			$html = '<div class="dropdown-header mega-group-title">' . $html . '</div>';
 		}
 
 		return $html;

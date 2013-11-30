@@ -21,13 +21,8 @@
 // HOME
 // ---------------------------------------------------------
 .home {
-  color: @gray;
 
   // Heading
-  h1, h2, h3 {
-    color: @gray-dark;
-  }
-
   h1 {
     line-height: 1;
   }
@@ -47,6 +42,8 @@
     margin-bottom: 0;
   }
 
+
+
   // 
   // HOME SPOTLIGHTS
   // ---------------------------------------------------------
@@ -55,9 +52,9 @@
   // -----------
   .t3-sl-1 {
     padding: 0;
-    background: #fff;
+    background: @t3-spotlight-background;
+    color: @t3-spotlight-text-color;
     border-bottom: 1px solid @t3-border-color;
-
     // jumbotron
     .jumbotron {
       border-radius: 0;
@@ -66,8 +63,8 @@
         margin-top: @line-height-computed;
       }
     }
-
   }
+
 
   // Spotlight 2
   // -----------
@@ -86,6 +83,7 @@
       }
     }
   }
+
 
   // Spotlight 3 & 4
   // ---------------
@@ -133,10 +131,12 @@
 
   }
 
+
   // Spotlight 5
   // -----------
   .t3-sl-5 {
-    background: #fff;
+    background: @t3-spotlight-background;
+    color: @t3-spotlight-text-color;
     border-top: 1px solid @t3-border-color;
     padding: 0;
 
@@ -147,4 +147,5 @@
     }
   }
 
+// End Home Spotlight
 }

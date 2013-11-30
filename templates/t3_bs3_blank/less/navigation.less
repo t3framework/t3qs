@@ -76,6 +76,7 @@
   }
 }
 
+
 // Dropdown section headers
 // ------------------------
 .dropdown-header {
@@ -85,6 +86,23 @@
   a {
     color: @dropdown-header-color;
   }
+}
+
+
+// T3 Note: Extend BS3 Dropdown Menu to multi level
+// See "base-bs3/less/legacy-navigation.less"
+// Dropdown Sub Menus
+// ------------------
+.dropdown-submenu > .dropdown-menu {
+}
+
+// Caret to indicate there is a submenu
+.dropdown-submenu > a:after {
+  border-left-color: darken(@dropdown-bg, 20%);
+}
+
+.dropdown-submenu:hover > a:after {
+  border-left-color: @dropdown-link-hover-color;
 }
 
 
@@ -299,29 +317,37 @@
 // T3 Note: Fix for Joomla! Pagination
 // ------------------------------------
 .pagination {
-
-   // re-defined nested class - joomla structure
+  .clearfix();
+  display: block;
+  // left align on Tablets / Desktop
+  @media screen and (min-width: @screen-sm) {
+    float: left;
+  }
+  // re-defined nested class - joomla structure
   .pagination {
     display: inline-block;
   }
-
 }
 
 
 // Counter
-// ----------
+// -------
 .counter {
-  float: right;
+  display: inline-block;
   margin-top: @line-height-computed;
   padding: @padding-base-vertical @padding-base-horizontal;
   background-color: @pagination-bg;
   border: 1px solid @pagination-border;
   border-radius: @border-radius-base;
+  // Right align on Tablets / Desktop
+  @media screen and (min-width: @screen-sm) {
+    float: right;
+  }
 }
 
 
 // Sizing
-// ----------
+// ------
 // Large
 .pagination-lg {
 }

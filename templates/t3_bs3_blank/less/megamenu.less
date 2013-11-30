@@ -33,7 +33,7 @@
   // Global Menu Inner padding
   // -------------------------
   .mega-inner {
-    padding: 10px;
+    padding: 10px 0;
   }
 
   // Inner Padding for 1 column
@@ -47,23 +47,25 @@
   // Menu Grids
   // ----------
   .row {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .row .row {
-    margin-left: -(@grid-gutter-width / 2);
-    margin-right: -(@grid-gutter-width / 2);
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .row + .row  {
-    border-top: 1px solid @t3-border-color;
+    padding-top: @t3-global-padding / 2;
+    border-top: 1px solid @hr-border;
   }
 
 
   // The Dropdown
   // ------------
   .mega-dropdown-menu {
+  }
+
+
+  // Dropdown Sub Menus
+  // ------------------
+  .dropdown-submenu {
   }
 
 
@@ -77,20 +79,29 @@
   //.mega-nav .mega-group > .mega-group-title,
   //.dropdown-menu .mega-nav .mega-group > .mega-group-title,
   //.dropdown-menu .active .mega-nav .mega-group > .mega-group-title
-  .dropdown-header {
-    // Link
-    > a {
-      // States
-      &:hover, &:active, &:focus {
-      } 
+  .dropdown-header,
+  .mega-nav .mega-group > .dropdown-header,
+  .dropdown-menu .mega-nav .mega-group > .dropdown-header,
+  .dropdown-menu .active .mega-nav .mega-group > .dropdown-header {
+    margin: 0;
+    padding: 0;
+    background: @t3-module-title-bg;
+    color: @t3-module-title-color;
+    font-size: @font-size-large;
+    line-height: normal;
+    // Link states
+    &:hover, &:active, &:focus {
+      background: inherit;
+      color: inherit;
     }
   }
 
   // Group Content
   .mega-group-ct {
-  }
-
-  .mega-group-ct > .row-fluid > [class*="col-"] > .mega-inner {
+    .row {
+      margin-left: -(@grid-gutter-width / 2);
+      margin-right: -(@grid-gutter-width / 2);
+    }
   }
 
 
@@ -108,7 +119,12 @@
   .col-md-12.mega-col-nav .mega-inner,
   .col-sm-12.mega-col-nav .mega-inner,
   .col-xs-12.mega-col-nav .mega-inner {
-    padding: 0;
+  }
+
+  .mega-group .col-lg-12.mega-col-nav .mega-inner,
+  .mega-group .col-md-12.mega-col-nav .mega-inner,
+  .mega-group .col-sm-12.mega-col-nav .mega-inner,
+  .mega-group .col-xs-12.mega-col-nav .mega-inner {
   }
 
   // The Nav
@@ -121,7 +137,9 @@
   }
 
   .mega-nav > li a,
-  .dropdown-menu .mega-nav > li a,
+  .dropdown-menu .mega-nav > li a {
+  }
+
   .dropdown-menu .mega-nav > li .separator {
   }
 
@@ -160,8 +178,6 @@
   // Module Title
   .t3-module .module-title {
     .dropdown-header(); // Make the Module Title look like Dropdown Header
-    padding-top: 5px;
-    padding-bottom: 5px;
     margin-bottom: 10px;
   }
 
@@ -224,6 +240,33 @@
     font-size: @t3-font-size-smaller;
     margin-top: 3px;
     font-weight: normal;
+  }
+
+
+  // The caret
+  // ---------
+  .nav .caret,
+  .dropdown-submenu .caret,
+  .mega-menu .caret {
+  }
+
+  // Show the caret on level 0 only
+  .nav > .dropdown > .dropdown-toggle .caret {
+  }
+
+
+  // The icon
+  // --------
+  .nav [class^="icon-"],
+  .nav [class*=" icon-"],
+  .nav .fa {
+  }
+
+  // Reset the margin on Input Group Addon
+  .nav .input-group-addon [class^="icon-"],
+  .nav .input-group-addon [class*=" icon-"],
+  .nav .input-group-addon .fa {
+    margin-right: 0;
   }
 
   // End

@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 	<?php if ($this->checkSpotlight('footnav', 'footer-1, footer-2, footer-3, footer-4, footer-5, footer-6')) : ?>
 		<!-- FOOT NAVIGATION -->
-		<div class="container">
+		<div class="container hidden-xs">
 			<?php $this->spotlight('footnav', 'footer-1, footer-2, footer-3, footer-4, footer-5, footer-6') ?>
 		</div>
 		<!-- //FOOT NAVIGATION -->
@@ -33,7 +33,7 @@ defined('_JEXEC') or die;
 				</div>
 				<?php if ($this->getParam('t3-rmvlogo', 1)): ?>
 					<div class="col-md-4 poweredby">
-						<a class="t3-logo t3-logo-dark" href="http://t3-framework.org" title="Powered By T3 Framework"
+						<a class="t3-logo t3-logo-color" href="http://t3-framework.org" title="Powered By T3 Framework"
 						   target="_blank" rel="nofollow">Powered by <strong>T3 Framework</strong></a>
 					</div>
 				<?php endif; ?>

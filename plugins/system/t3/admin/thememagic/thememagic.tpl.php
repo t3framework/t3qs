@@ -34,9 +34,10 @@ defined('_JEXEC') or die;
 			<div id="t3-admin-thememagic">
 				<a href="<?php echo JURI::base(true); ?>" class="themer-minimize"><i class="icon-remove-sign"></i><i class="icon-magic"></i>  <span><?php echo JText::_('T3_TM_MINIMIZE') ; ?></span></a>
 				<a href="<?php echo $backurl; ?>" class="themer-close" title="<?php echo JText::_($isadmin ? 'T3_TM_BACK_TO_ADMIN' : 'T3_TM_EXIT'); ?>"><i class="icon-arrow-left"></i><?php echo JText::_($isadmin ? 'T3_TM_BACK_TO_ADMIN' : 'T3_TM_EXIT'); ?></a>
-
+				
 				<div class="t3-admin-tm-header">
-				  <h2><strong><?php echo JText::_('T3_TM_CUSTOMIZING'); ?></strong> <span><?php echo $tplparams->get('sitename'); ?></span></h2>
+					<div id="t3-admin-tm-recss" class="t3-progress"></div>
+				  <h2><strong><?php echo JText::_('T3_TM_CUSTOMIZING'); ?></strong> <span><?php echo T3_TEMPLATE ?></span></h2>
 				  <form id="t3-admin-tm-form" name="t3-admin-tm-form" class="form-validate form-inline">
 					<div class="controls controls-row">
 						<label for="t3-admin-theme-list"><?php echo JText::_('T3_TM_THEME_LABEL'); ?></label>
@@ -56,9 +57,6 @@ defined('_JEXEC') or die;
 					  </div>
 					</div>
 				  </form>
-				  <div id="t3-admin-tm-recss-progress" class="progress progress-striped active fade invisible">
-						<div class="bar"></div>
-					</div>
 				</div>
 	
 				<form id="t3-admin-tm-variable-form" name="adminForm" class="form-validate">
@@ -202,10 +200,14 @@ defined('_JEXEC') or die;
 		<script type="text/javascript" src="<?php echo T3_ADMIN_URL; ?>/admin/thememagic/js/thememagic.js"></script>
 		<script type="text/javascript">
 			// add class active for open 
-			$('#t3-admin-tm-accord .accordion-group').on('hide', function () {
-				$(this).removeClass('active');
-			}).on('show', function() {
-				$(this).addClass('active');
+			$('#t3-admin-tm-accord .accordion-group').on('hide', function (e) {
+				if($(e.target).hasClass('accordion-body')){
+					$(this).removeClass('active');
+				}
+			}).on('show', function(e) {
+				if($(e.target).hasClass('accordion-body')){
+					$(this).addClass('active');
+				}
 			});
 			
 			var T3Theme = window.T3Theme || {};
@@ -224,6 +226,9 @@ defined('_JEXEC') or die;
 			setInterval(function(){
 				$.get('index.php');
 			}, <?php echo $refreshTime; ?>);
+
+			//tooltip
+			$('.hasTooltip').tooltip({html: true, container: 'body'});
 
 		</script>
 		<?php else :?>

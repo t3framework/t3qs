@@ -33,18 +33,14 @@
 .off-canvas-toggle {
   border-radius: 0;
   border: 0;
-  position: absolute;
-  top: 1px;
-  left: 1px;
   padding: 0;
-  height: 35px;
-  line-height: 35px;
-  width: 35px;
+  width: @navbar-height;
+  height: @navbar-height;
+  line-height: @navbar-height;
   &:focus {
     outline: none;
   }
 }
-
 
 
 //
@@ -54,7 +50,7 @@
 
   // Generic
   // -----------------------------------
-  background: @t3-off-canvas-background-color;
+  background: @t3-off-canvas-background;
   color: @t3-off-canvas-text-color;
 
 

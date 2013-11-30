@@ -229,18 +229,14 @@ var T3Theme = window.T3Theme || {};
 		
 		applyLess: function(force){
 			
-			var jpg = $('#t3-admin-tm-recss-progress');
-			if(jpg.hasClass('invisible')){
-				jpg.removeClass('invisible').addClass('in').find('.bar').width(0);
-			}
+			T3Theme.setProgress(0);
 
 			var nvars = T3Theme.rebuildData(true),
 				jsonstr = JSON.stringify(nvars);
 
 			if(!force && T3Theme.jsonstr === jsonstr){
-				setTimeout(function(){
-					jpg.addClass('invisible').find('.bar').width(0);
-				}, 300);
+	
+				T3Theme.setProgress(100);
 			
 				return false;
 			}
@@ -287,7 +283,7 @@ var T3Theme = window.T3Theme || {};
 				this.applyLess();			//refresh   	
 			}
 			
-            return true;
+			return true;
 		},
 		
 		serializeArray: function(){
@@ -370,6 +366,15 @@ var T3Theme = window.T3Theme || {};
 			
 			return vals;
 		},
+
+		elmsFrom: function(name){
+			var el = document.adminForm[name];
+			if(!el){
+				el = document.adminForm[name + '[]'];
+			}
+			
+			return $(el);
+		},
 		
 		setValues: function(el, vals){
 			var jel = $(el);
@@ -378,7 +383,25 @@ var T3Theme = window.T3Theme || {};
 				jel.val(vals);
 				
 				if($.makeArray(jel.val())[0] != vals[0]){
-					jel.val('-1');
+
+					if(T3Theme.placeholder && T3Theme.data.base[T3Theme.getName(el)] == vals[0]){
+						jel.val('-1');
+					} else {
+						var name = T3Theme.getName(el),
+							celm = T3Theme.elmsFrom('t3form[thememagic][' + name + '-custom]');
+
+						if(!celm.length){
+							celm = T3Theme.elmsFrom('t3form[thememagic][' + name + '_custom]');						
+						}
+
+						if(celm.length){
+							jel.val('undefined').trigger('change.depend');
+
+							//T3Theme.setValues(celm, vals);
+						} else {
+							jel.val('-1');
+						}
+					}
 				}
 			}else {
 				if(jel.prop('type') == 'checkbox' || jel.prop('type') == 'radio'){
@@ -421,12 +444,13 @@ var T3Theme = window.T3Theme || {};
 
 			for(var k in json){
 				if(json.hasOwnProperty(k)){
-					if(k.match(/_custom/)){
-						json[k.replace('_custom', '')] = json[k];	
-					}
-
+					
 					if(json[k] == 'undefined' || json[k] == ''){
 						delete json[k];
+					} else {
+						if(k.match(/([_-])custom/)){
+							json[k.replace(/[_-]custom/, '')] = json[k];	
+						}
 					}
 				}
 			}
@@ -464,6 +488,20 @@ var T3Theme = window.T3Theme || {};
 			return val;
 		},
 
+		filterfont: function(val){			
+			val = val.split(',');
+			if(val.length > 1){
+				for(var i = 0; i < val.length; i++){
+					if($.trim(val[i]).indexOf(' ') !== -1){
+						val[i] = '\'' + val[i].replace(/['"]/g, '') + '\'';
+					}
+				}
+			}
+
+			val = val.join(', ');
+			return val.replace(/\s+/g, ' ');
+		},
+
 		padding: function(str, limit, pad){
 			pad = pad || '0';
 
@@ -475,7 +513,7 @@ var T3Theme = window.T3Theme || {};
 		},
 		
 		getName: function(el){
-			var matches = el.name.match('t3form\\[thememagic\\]\\[([^\\]]*)\\]');
+			var matches = (el.name || el[0].name).match('t3form\\[thememagic\\]\\[([^\\]]*)\\]');
 			if (matches){
 				return matches[1];
 			}
@@ -589,27 +627,34 @@ var T3Theme = window.T3Theme || {};
 
 		//simple progress bar
 		setProgress: function(ajax, less){
-			var jpg = $('#t3-admin-tm-recss-progress'),
-				ajaxp = ajax || (jpg.data('ajaxpercent') || 100),
-				lessp = less || (jpg.data('lesspercent') || 100),
+			var jpg = $('#t3-admin-tm-recss'),
+				ajaxp = typeof ajax != 'undefined' ? ajax : ((jpg.data('ajaxpercent') || 100)),
+				lessp = typeof less != 'undefined' ? less : ((jpg.data('lesspercent') || 100)),
 				percent = Math.max((ajaxp + lessp) / 2, 1);
-			
+
+			if(jpg.hasClass('t3-anim-finish')){
+				jpg.removeClass('t3-anim-slow t3-anim-finish').css('width', '0%');
+			}
+
 			jpg
 				.data('ajaxpercent', ajaxp)
 				.data('lesspercent', lessp)
-				.removeClass('invisible')
-				.find('.bar').css('width', percent + '%');
-
+				.addClass('t3-anim-slow')
+				.css('width', percent + '%');
+			
 			clearTimeout(T3Theme.progressid);
 
 			if(percent >= 100){
-				T3Theme.progressid = setTimeout(function(){
-					jpg
-						.data('percent', 0)
-						.data('retain', 0)
-						.addClass('invisible')
-							.find('.bar').width(0);
-				}, 1000);
+				jpg
+					.removeClass('t3-anim-slow')
+					.addClass('t3-anim-finish')
+					.one($.support.transition.end, function () {
+						setTimeout(function(){
+							if(jpg.hasClass('t3-anim-finish')){
+								jpg.removeClass('t3-anim-finish').css('width', '0%');
+							}
+						}, 1000);
+					});
 
 				T3Theme.idle = true;
 			} else {

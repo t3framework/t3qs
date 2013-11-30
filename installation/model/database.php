@@ -23,7 +23,7 @@ class InstallationModelDatabase extends JModelBase
 	 * @var    integer
 	 * @since  3.1
 	 */
-	protected static $userId = 0;
+	protected static $userId = 42;
 
 	/**
 	 * Generates the user ID

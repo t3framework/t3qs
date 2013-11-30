@@ -12,31 +12,30 @@
  */
 
 
+//
+// HOME
 // ---------------------------------------------------------
-// FOOTER
-// ---------------------------------------------------------
+.home {
 
-.t3-footer {
-  background: @link-color;
-  color: @white;
-  // links
-  a {
-    color: lighten(@link-color,50%);
+  // Home Spotlights
+  // ---------------
+  .t3-sl-1,
+  .t3-sl-5 {
+    // jumbotron
+    .jumbotron {
+      //jumbotron btn
+      .btn {
+        border-color: #fff;
+      }
+    }
   }
-  a:hover, a:active, a:focus {
-    color: @white;
-  }
+
 }
 
-// Foot Nav
-// --------
-.t3-footnav .module-title {
-  color: @white;
-}
 
-
-// Copyright
-// ---------
-.t3-copyright {
-  border-top: 1px solid lighten(@link-color,5%);
+//
+// NAVIGATIONS
+// ---------------------------------------------------------
+.t3-mainnav {
+  border-bottom: none;
 }

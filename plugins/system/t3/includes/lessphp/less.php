@@ -149,11 +149,7 @@ class T3Less
 
 		//reset import dirs
 		Less_Cache::$import_dirs = array();
-
-		$env    = new Less_Environment();
-		$parser = new Less_Parser($env);
-		$env->setCompress(false);
-
+		$parser = new Less_Parser();
 
 		$app    = JFactory::getApplication();
 		$tpl    = T3_TEMPLATE;
@@ -165,9 +161,9 @@ class T3Less
 		$rcomment     = '@/\*[^*]*\*+([^/][^*]*\*+)*/@';
 		$rspace       = '@[\r?\n]{2,}@';
 		$rimport      = '@^\s*\@import\s+"([^"]*)"\s*;@im';
-		$rvarscheck   = '@(base|bootstrap|'.preg_quote($tpl).')/less/(vars|variables)\.less@';
-		$rexcludepath = '@(base|bootstrap|'.preg_quote($tpl).')/less/@';
-		$rimportvars  = '@^\s*\@import\s+".*(variables-custom|variables|vars)\.less"\s*;@im';
+		$rvarscheck   = '@(base|base-bs3|bootstrap|'.preg_quote($tpl).')/less/(vars|variables|mixins)\.less@';
+		$rexcludepath = '@(base|base-bs3|bootstrap|'.preg_quote($tpl).')/less/@';
+		$rimportvars  = '@^\s*\@import\s+".*(variables-custom|variables|vars|mixins)\.less"\s*;@im';
 
 		$rsplitbegin  = '@^\s*\#';
 		$rsplitend    = '[^\s]*?\s*{\s*[\r\n]*\s*content:\s*"([^"]*)";\s*[\r\n]*\s*}@im';
@@ -319,6 +315,16 @@ class T3Less
 		// myself
 		$importdirs[dirname(JPATH_ROOT . '/' . $path)] = $root . '/' . dirname($path) . '/';
 
+		// ignore all these files
+		foreach (array(T3_PATH, T3_PATH . '/bootstrap', T3_TEMPLATE_PATH) as $know_path) {
+			foreach (array('vars', 'variables', 'mixins') as $know_file) {
+				$realfile = realpath($know_path . '/less/' . $know_file . '.less');
+				
+				if(is_file($realfile) && !Less_Parser::FileParsed($realfile)){
+					Less_Parser::AddParsedFile($realfile);
+				}
+			}
+		}
 
 		// compile less to css using lessphp
 		$parser->SetImportDirs($importdirs);
@@ -529,10 +535,7 @@ class T3Less
 
 		//reset import dirs
 		Less_Cache::$import_dirs = array();
-
-		$env    = new Less_Environment();
-		$parser = new Less_Parser($env);
-		$env->setCompress(false);
+		$parser = new Less_Parser();
 
 		$app    = JFactory::getApplication();
 		$doc    = JFactory::getDocument();
@@ -548,9 +551,9 @@ class T3Less
 		$rcomment     = '@/\*[^*]*\*+([^/][^*]*\*+)*/@';
 		$rspace       = '@[\r?\n]{2,}@';
 		$rimport      = '@^\s*\@import\s+"([^"]*)"\s*;@im';
-		$rvarscheck   = '@(base|bootstrap|'.preg_quote($tpl).')/less/(vars|variables)\.less@';
-		$rexcludepath = '@(base|bootstrap|'.preg_quote($tpl).')/less/@';
-		$rimportvars  = '@^\s*\@import\s+".*(variables-custom|variables|vars)\.less"\s*;@im';
+		$rvarscheck   = '@(base|base-bs3|bootstrap|'.preg_quote($tpl).')/less/(vars|variables|mixins)\.less@';
+		$rexcludepath = '@(base|base-bs3|bootstrap|'.preg_quote($tpl).')/less/@';
+		$rimportvars  = '@^\s*\@import\s+".*(variables-custom|variables|vars|mixins)\.less"\s*;@im';
 
 		$rsplitbegin  = '@^\s*\#';
 		$rsplitend    = '[^\s]*?\s*{\s*[\r\n]*\s*content:\s*"([^"]*)";\s*[\r\n]*\s*}@im';
@@ -822,10 +825,7 @@ class T3Less
 		$csspath  = 'templates/' . T3_TEMPLATE . '/css/';
 
 		// t3 core plugin files
-		$t3files  = array('megamenu', 'off-canvas');
-		if($params->get('bs2compat', 0)){
-			$t3files[] = 'compat';
-		}
+		$t3files  = array('frontend-edit', 'legacy-grid', 'legacy-form', 'legacy-navigation', 'megamenu', 'off-canvas');
 		
 		// all less file in less folders
 		$lessFiles   = JFolder::files(JPATH_ROOT . '/' . $lesspath, '.less');
@@ -886,7 +886,7 @@ class T3Less
 
 				if(!empty($t3files)){
 					foreach ($t3files as $file) {
-						self::compileCss(T3_REL . '/less/' . $file . '.less', $csspath . $file . '.css');
+						self::compileCss(T3_REL . '/less/' . $file . '.less', $csspath . 'themes/' . $t . '/' . $file . '.css');
 					}
 				}
 			}
@@ -905,7 +905,7 @@ class T3Less
 
 				if(!empty($t3files)){
 					foreach ($t3files as $file) {
-						self::compileCss(T3_REL . '/less/' . $file . '.less', $csspath . $file . '.css');
+						self::compileCss(T3_REL . '/less/' . $file . '.less', $csspath . 'rtl/' . $file . '.css');
 					}
 				}
 			}
@@ -922,7 +922,7 @@ class T3Less
 
 					if(!empty($t3files)){
 						foreach ($t3files as $file) {
-							self::compileCss(T3_REL . '/less/' . $file . '.less', $csspath . $file . '.css');
+							self::compileCss(T3_REL . '/less/' . $file . '.less', $csspath . 'rtl/' . $t . '/' . $file . '.css');
 						}
 					}
 				}

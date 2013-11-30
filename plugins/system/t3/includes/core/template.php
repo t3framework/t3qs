@@ -668,6 +668,7 @@ class T3Template extends ObjectExtendable
 		if (!empty($param)) {
 
 			foreach ($this->maxcol as $device => $span) {
+				//convert hidden class
 				if(!empty($param->$device) && strpos(' ' . $param->$device . ' ', ' hidden ') !== false){
 					$param->$device = str_replace(' hidden ', ' hidden-' . $device . ' ', ' ' . $param->$device . ' ');
 				}
@@ -681,7 +682,7 @@ class T3Template extends ObjectExtendable
 			
 			$defdv = $this->defdv;
 			if(!$this->responcls && !empty($data)){
-				$data = (isset($param->$defdv) ? ' ' . $param->$defdv : '') . ' t3respon"' . $data;
+				$data = (isset($param->$defdv) ? ' ' . $param->$defdv : '') . ' t3respon"' . substr($data, 0, strrpos($data, '"'));
 			}
 		}
 
@@ -737,19 +738,25 @@ class T3Template extends ObjectExtendable
 	 */
 	function addHead()
 	{
+
+		$app   = JFactory::getApplication();
+		$user  = JFactory::getUser();
+		$input = $app->input;
+
 		$responsive = $this->getParam('responsive', 1);
 		$navtype    = $this->getParam('navigation_type', 'joomla');
 		$navtrigger = $this->getParam('navigation_trigger', 'hover');
-		$offcanvas  = $this->getParam('navigation_collapse_offcanvas', 1) || $this->getParam('navigation_offcanvas_enable', 1);
-		$bs2compat  = $this->getParam('bs2compat', 0);
+		$offcanvas  = $this->getParam('navigation_collapse_offcanvas', 0) || $this->getParam('addon_offcanvas_enable', 0);
+		$legacycss  = $this->getParam('legacy_css', 0);
+		$frontedit  = in_array($input->getCmd('option'), array('com_media', 'com_config'))	//com_media or com_config
+										|| in_array($input->getCmd('layout'), array('edit'))								//edit layout
+										|| (version_compare(JVERSION, '3.2', 'ge') && $user->id && $app->get('frontediting', 1) && 
+												($user->authorise('core.edit', 'com_modules') || $user->authorise('core.edit', 'com_menus')));	//frontediting
 
-		$frontedit  = in_array(JFactory::getApplication()->input->getCmd('option'), array('com_media', 'com_config'));
-
-		// BOOTSTRAP 2 COMPATIBLE
-		if($bs2compat){
-			$this->addStyleSheet(T3_URL . '/css/legacy-grid.css');
-			$this->addCss('compat'); //should be in template 'less' folder
-			$this->addStyleSheet(T3_URL . '/fonts/font-awesome/css/font-awesome.css');
+		// LEGACY COMPATIBLE
+		if($legacycss){
+			$this->addCss('legacy-grid');	//legacy grid
+			$this->addStyleSheet(T3_URL . '/fonts/font-awesome/css/font-awesome.css'); //font awesome 3
 		}
 
 		// FRONTEND EDITING
@@ -759,20 +766,24 @@ class T3Template extends ObjectExtendable
 
 		// BOOTSTRAP CSS
 		$this->addCss('bootstrap', false);
+
 		// TEMPLATE CSS
 		$this->addCss('template', false);
 
 		if (!$responsive) {
-			$this->addCss('non-responsive');
+			$this->addCss('non-responsive'); //no responsive
 
 			$nonrespwidth = $this->getParam('non_responsive_width', '970px');
 			if(preg_match('/^(-?\d*\.?\d+)(px|%|em|rem|pc|ex|in|deg|s|ms|pt|cm|mm|rad|grad|turn)?/', $nonrespwidth, $match)){
 				$nonrespwidth = $match[1] . (!empty($match[2]) ? $match[2] : 'px');
 			}
 			$this->addStyleDeclaration('.container {width: ' . $nonrespwidth . ' !important;}');
+		
 		} else if(!$this->responcls){
+			
 			// BOOTSTRAP RESPONSIVE CSS
 			$this->addCss('bootstrap-responsive');
+			
 			// RESPONSIVE CSS
 			$this->addCss('template-responsive');
 		}

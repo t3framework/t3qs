@@ -69,30 +69,20 @@ input[type="color"],
   textarea& {
     height: auto;
   }
-}
 
-// Legacy class below
-// Reset Width for Legacy Classes in Medium Screen
-select,
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"],
-.inputbox {
-  @media (min-width: @screen-sm) {
+  // Reset Width for Legacy classes in Medium Screen
+  @media screen and (min-width: @screen-sm) {
     width: auto;
   }
+
+}
+
+// Redefine padding for <select>
+select,
+select.form-control,
+select.inputbox,
+select.input {
+  padding-right: 5px;
 }
 
 
@@ -199,7 +189,7 @@ legend + .control-group {
   padding: @t3-global-padding;
   margin: @t3-global-margin 0;
   background-color: @gray-lighter;
-  border-radius: @base-border-radius;
+  border-radius: @border-radius-base;
   // Reset the padding of offset col
   [class*="col-sm-offset-"],
   [class*="col-md-offset-"] {
@@ -215,7 +205,7 @@ legend + .control-group {
 .input-append,
 .input-prepend {
   display: inline-block;
-  margin-bottom: @line-height-base / 2;
+  margin-bottom: @line-height-computed / 2;
   vertical-align: middle;
   font-size: 0; // white space collapse hack
   white-space: nowrap; // Prevent span and input from separating
@@ -252,7 +242,7 @@ legend + .control-group {
     font-weight: normal;
     line-height: @line-height-base;
     text-align: center;
-    background-color: @grayLighter;
+    background-color: @gray-lighter;
     border: 1px solid #ccc;
   }
   .add-on,
