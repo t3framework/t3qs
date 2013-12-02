@@ -415,10 +415,14 @@ samp {
   color: #696f72;
   border-top: 1px solid #e0e2e3;
   padding: 60px 0 0;
+  text-align: center;
 }
 .features-list .feature-row:last-child {
   border-bottom: 1px solid #e0e2e3;
   margin-bottom: 60px;
+}
+.features-list .feature-row h3 {
+  font-size: 28px;
 }
 .features-list .feature-row div:first-child {
   padding-right: 0;
