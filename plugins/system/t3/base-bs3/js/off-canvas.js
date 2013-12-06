@@ -1,13 +1,13 @@
-/** 
+/**
  *------------------------------------------------------------------------------
  * @package       T3 Framework for Joomla!
  *------------------------------------------------------------------------------
  * @copyright     Copyright (C) 2004-2013 JoomlArt.com. All Rights Reserved.
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
- * @authors       JoomlArt, JoomlaBamboo, (contribute to this project at github 
+ * @authors       JoomlArt, JoomlaBamboo, (contribute to this project at github
  *                & Google group to become co-author)
  * @Google group: https://groups.google.com/forum/#!forum/t3fw
- * @Link:         http://t3-framework.org 
+ * @Link:         http://t3-framework.org
  *------------------------------------------------------------------------------
  */
 
@@ -15,6 +15,8 @@ jQuery (document).ready(function($){
     // fix for old ie
     if ($.browser.msie && $.browser.version < 10) {
         $('html').addClass ('old-ie');
+    } else if(/constructor/i.test(window.HTMLElement)){
+        $('html').addClass('safari');
     }
 
     var $wrapper = $('body'),
@@ -24,7 +26,8 @@ jQuery (document).ready(function($){
         $close = $('.t3-off-canvas .close'),
         $btn=null,
         $nav=null,
-        direction = 'left';
+        direction = 'left',
+        $fixed = null;
     // no wrapper, just exit
     if (!$wrapper.length) return ;
 
@@ -56,6 +59,7 @@ jQuery (document).ready(function($){
 
         $btn = $(this);
         $nav = $($btn.data('nav'));
+        $fixed = $inner.find('*').filter (function() {return $(this).css("position") === 'fixed';});
 
         $nav.addClass ('off-canvas-current');
 
@@ -66,10 +70,22 @@ jQuery (document).ready(function($){
 
         $offcanvas.height($(window).height());
 
+
         // disable scroll on page
         var scrollTop = ($('html').scrollTop()) ? $('html').scrollTop() : $('body').scrollTop(); // Works for Chrome, Firefox, IE...
         $('html').addClass('noscroll').css('top',-scrollTop).data('top', scrollTop);
         $('.t3-off-canvas').css('top',scrollTop);
+
+        // make the fixed element become absolute
+        $fixed.each (function () {
+            var $this = $(this),
+                $parent = $this.parent(),
+                mtop = 0;
+            // find none static parent
+            while (!$parent.is($inner) && $parent.css("position") === 'static') $parent = $parent.parent();
+            mtop = -$parent.offset().top;
+            $this.css ({'position': 'absolute', 'margin-top': mtop});
+        });
 
         $wrapper.scrollTop (scrollTop);
         // update effect class
@@ -108,6 +124,8 @@ jQuery (document).ready(function($){
             $('html').removeClass ('noscroll').css('top', '');
             $('html,body').scrollTop ($('html').data('top'));
             $nav.removeClass ('off-canvas-current');
+            // restore fixed elements
+            $fixed.css ({'position': '', 'margin-top': ''});
         }, 550);
 
         // fix for old ie

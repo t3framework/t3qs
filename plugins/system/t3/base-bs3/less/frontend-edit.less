@@ -115,6 +115,11 @@
         width: 210px;
       }
     }
+
+    .btn {
+      border: 1px solid @btn-default-border;
+      background-color: @btn-default-bg;
+    }
   }
 
 }
@@ -139,7 +144,9 @@
   margin-top: @line-height-computed;
   margin-bottom: @line-height-computed;
   .btn {
-    background: @gray-lighter;
+    background-color: @btn-default-bg;
+    text-shadow: 0 1px 0 #fff; 
+    border-color: @btn-default-border;
   }
 }
 
@@ -279,7 +286,7 @@
 //
 // Special Radio Styles for T3
 // ------------------------------
-fieldset.radio {
+.t3onoff {
 
   width: 90px;
   height: 30px;
@@ -341,7 +348,6 @@ fieldset.radio {
     background: #fff;
   }
 
-  label:nth-child(2):before,
   label.off:before {
     content: "OFF";
     text-align: right;
@@ -354,47 +360,72 @@ fieldset.radio {
   }
 
   /* off background */
-  label:nth-child(2):before,
   label.off:before {
     background: #eee;
     left: 100%;
   }
 
-  label.active:nth-child(2):before,
   label.off.active:before {
     left: 0%;
   }
 
-  label:nth-child(4):before,
   label.on:before {
     background: #690;
     left: -100%;
   }
 
-  label.active:nth-child(4):before,
   label.on.active:before {
     left: -0%;
   }
 
   /* off switch */
-  label:nth-child(2):after,
   label.off:after {
     left: 60%;
   }
 
-  label.active:nth-child(2):after,
   label.off.active:after {
     left: 0%;
   }
 
-  label:nth-child(4):after,
   label.on:after {
     left: 0%;
   }
 
-  label.active:nth-child(4):after,
   label.on.active:after {
     left: 60%;
+  }
+}
+
+/* radio btn group */
+fieldset.radio.btn-group {
+  padding: 0;
+
+  input {
+    display: none;
+  }
+
+  label {
+    display: inline-block;
+    min-width: 54px;
+    padding: 0 12px;
+    border: 1px solid #aaa;
+    line-height: 28px;
+    background: #eee;
+    color: #555;
+    border-radius: 0;
+    text-align: center;
+    border-right-width: 0px;
+    text-transform: uppercase;
+
+    &:last-child {
+      border-right-width: 1px;
+    }
+
+    &.active {
+      background: #690;
+      border-color: #5c8b00;
+      color: #fff;
+    }
   }
 }
 
@@ -475,11 +506,19 @@ fieldset.radio {
   text-decoration: none;
 }
 
-.edit.item-page .control-group a.modal {
+.edit.item-page a.modal {
+  display: inline-block;
   position: inherit;
   width: auto !important;
-  margin-left: 0 !important;
   top: auto !important;
+  overflow: hidden;
+
+  &.btn {
+    background: @btn-default-bg;
+    text-shadow: 0 1px 0 #fff; 
+    border-color: @btn-default-border;
+    overflow: hidden;
+  }
 }
 
 
@@ -488,5 +527,3 @@ fieldset.radio {
   cursor: pointer;
   margin-left: 5px;
 }
-
-

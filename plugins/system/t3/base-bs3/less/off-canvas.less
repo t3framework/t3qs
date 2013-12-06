@@ -128,7 +128,6 @@ body {
   display: block;
 }
 
-html[dir="rtl"] .off-canvas-left.t3-off-canvas,
 html[dir="ltr"] .off-canvas-right.t3-off-canvas {
   left: auto;
   right: 0;
@@ -852,6 +851,8 @@ body.off-canvas-effect-14.off-canvas-right {
   -webkit-transform: translate3d(100%, 0, 0) rotateY(0deg);
   transform: translate3d(100%, 0, 0) rotateY(0deg);
 }
+
+
 //
 // Fallback for old IE (<IE10)
 // that don't support 3D transforms
@@ -863,10 +864,17 @@ body.off-canvas-effect-14.off-canvas-right {
   }
 }
 
-html[dir="rtl"].off-canvas-left.old-ie,
-html[dir="ltr"].off-canvas-right.old-ie {
+
+html[dir="ltr"] .off-canvas-right.old-ie {
   .t3-off-canvas {
     right: -@t3-off-canvas-width;
     left: auto;
   }
+}
+
+//
+// Fix conflict with modal
+// -----------------------------------------------------
+.modal-open .t3-wrapper {
+  position: static;
 }
