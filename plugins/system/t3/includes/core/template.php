@@ -161,7 +161,18 @@ class T3Template extends ObjectExtendable
 	{
 		$path = T3Path::getPath('tpls/blocks/' . $block . '.php');
 		if ($path) {
-			include $path;
+			if($block == 'footer'){
+				
+				ob_start();
+				include $path;
+				$buffer = ob_get_contents();
+				ob_end_clean();
+				$buffer = T3::fixT3Link($buffer);
+				echo $buffer;
+
+			} else {
+				include $path;
+			}
 		} else {
 			echo "<div class=\"error\">Block [$block] not found!</div>";
 		}
@@ -277,10 +288,13 @@ class T3Template extends ObjectExtendable
 					if(isset($param->$device)){
 						$prefix = $this->responcls ? ' ' : ' data-' . $device . '="';
 						$posfix = $this->responcls ? '' : '"';
-						
+
+						if(strpos(' ' . $param->$device . ' ', ' hidden ') !== false){
+							$param->$device = str_replace(' hidden ', ' hidden-' . $device . ' ', ' ' . $param->$device . ' ');
+						}
+
 						$data .= $prefix . $param->$device . $posfix;
 					}
-
 				}
 			} else {
 				$data = isset($param->$defdv) ? ' ' . $param->$defdv : '';
@@ -429,6 +443,7 @@ class T3Template extends ObjectExtendable
 	{
 		return $this->_pageclass;
 	}
+
 
 	/**
 	 * Render page class

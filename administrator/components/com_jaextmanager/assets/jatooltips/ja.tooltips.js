@@ -1,6 +1,6 @@
 /**
  * ------------------------------------------------------------------------
- * JA Extenstion Manager Component
+ * JA Extenstion Manager Component for J25 & J32
  * ------------------------------------------------------------------------
  * Copyright (C) 2004-2011 J.O.O.M Solutions Co., Ltd. All Rights Reserved.
  * @license - GNU/GPL, http://www.gnu.org/licenses/gpl.html

@@ -52,7 +52,7 @@ class plgSystemT3 extends JPlugin
 					$db = JFactory::getDbo();
 					$query = $db->getQuery(true);
 					$query
-						->select('template, params')
+						->select('home, template, params')
 						->from('`#__template_styles`')
 						->where('`client_id` = 0 AND `id`= ' . (int)$t3tmid)
 						->order('`id` ASC');
@@ -60,14 +60,13 @@ class plgSystemT3 extends JPlugin
 					$tm = $db->loadObject();
 
 					if (is_object($tm) && file_exists(JPATH_THEMES . '/' . $tm->template)) {
-						// we will not use setTemplate as it still have issue
-						// $app->setTemplate($tm->template, (new JRegistry($tm->params)));
-
+						
+						$app->setTemplate($tm->template, (new JRegistry($tm->params)));
+						// setTemplate is buggy, we need to update more info
 						// update the template 
 						$template = $app->getTemplate(true);
 						$template->id = $t3tmid;
-						$template->template = $tm->template;
-						$template->params = new JRegistry($tm->params);
+						$template->home = $tm->template;
 					}
 				}
 			}
@@ -294,6 +293,12 @@ class plgSystemT3 extends JPlugin
 		static $chromed = false;
 		// Detect layout path in T3 themes
 		if (defined('T3_PLUGIN') && T3::detect()) {
+
+			// fix JA Backlink
+			if($module->module == 'mod_footer'){
+				$module->content = T3::fixJALink($module->content);
+			}
+
 			// Chrome for module
 			if (!$chromed) {
 				$chromed = true;
@@ -322,10 +327,15 @@ class plgSystemT3 extends JPlugin
 	{
 		// Detect layout path in T3 themes
 		if (defined('T3_PLUGIN') && T3::detect()) {
+			
+			T3::import('core/path');
+
 			$tPath = T3Path::getPath('html/' . $module . '/' . $layout . '.php');
-			if ($tPath)
+			if ($tPath) {
 				return $tPath;
+			}
 		}
+		
 		return false;
 	}
 }

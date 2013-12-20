@@ -19,9 +19,17 @@ defined('_JEXEC') or die;
  */
 class JHtmlIcon
 {
-	public static function create($category, $params)
+	public static function create($category, $params, $attribs = array(), $legacy = false)
 	{
-		$uri = JURI::getInstance();
+		if(version_compare(JVERSION, '3.0', 'ge')){
+			JHtml::_('bootstrap.tooltip');
+			$tip = 'hasTooltip';
+		} else {
+			JHtml::_('behavior.tooltip');
+			$tip = 'hasTip';
+		}
+		
+		$uri = JUri::getInstance();
 
 		$url = 'index.php?option=com_content&task=article.add&return=' . base64_encode($uri) . '&a_id=0&catid=' . $category->id;
 
@@ -31,16 +39,37 @@ class JHtmlIcon
 			$text = JText::_('JNEW') . '&#160;';
 		}
 
-		$button = JHtml::_('link', JRoute::_($url), $text, 'class="btn btn-primary"');
+		// Add the button classes to the attribs array
+		if (isset($attribs['class']))
+		{
+			$attribs['class'] = $attribs['class'] . ' btn btn-primary';
+		}
+		else
+		{
+			$attribs['class'] = 'btn btn-primary';
+		}
 
-		$output = '<span class="hasTip" title="' . JText::_('COM_CONTENT_CREATE_ARTICLE') . '">' . $button . '</span>';
+		$button = JHtml::_('link', JRoute::_($url), $text, $attribs);
+
+		$output = '<span class="' . $tip . '" title="' . htmlspecialchars(JText::_('COM_CONTENT_CREATE_ARTICLE'), ENT_COMPAT, 'UTF-8') . '">' . $button . '</span>';
 		return $output;
 	}
 
-	public static function email($article, $params, $attribs = array())
+	/**
+	 * Method to generate a link to the email item page for the given article
+	 *
+	 * @param   object     $article  The article information
+	 * @param   JRegistry  $params   The item parameters
+	 * @param   array      $attribs  Optional attributes for the link
+	 * @param   boolean    $legacy   True to use legacy images, false to use icomoon based graphic
+	 *
+	 * @return  string  The HTML markup for the email item link
+	 */
+	public static function email($article, $params, $attribs = array(), $legacy = false)
 	{
 		require_once JPATH_SITE . '/components/com_mailto/helpers/mailto.php';
-		$uri      = JURI::getInstance();
+
+		$uri      = JUri::getInstance();
 		$base     = $uri->toString(array('scheme', 'host', 'port'));
 		$template = JFactory::getApplication()->getTemplate();
 		$link     = $base . JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catid), false);
@@ -57,6 +86,7 @@ class JHtmlIcon
 		$attribs['onclick'] = "window.open(this.href,'win2','" . $status . "'); return false;";
 
 		$output = JHtml::_('link', JRoute::_($url), $text, $attribs);
+
 		return $output;
 	}
 
@@ -66,14 +96,15 @@ class JHtmlIcon
 	 * This icon will not display in a popup window, nor if the article is trashed.
 	 * Edit access checks must be performed in the calling code.
 	 *
-	 * @param    object $article The article in question.
-	 * @param    object $params The article parameters
-	 * @param    array $attribs Not used??
+	 * @param   object     $article  The article information
+	 * @param   JRegistry  $params   The item parameters
+	 * @param   array      $attribs  Optional attributes for the link
+	 * @param   boolean    $legacy   True to use legacy images, false to use icomoon based graphic
 	 *
-	 * @return    string    The HTML for the article edit icon.
-	 * @since    1.6
+	 * @return  string	The HTML for the article edit icon.
+	 * @since   1.6
 	 */
-	public static function edit($article, $params, $attribs = array())
+	public static function edit($article, $params, $attribs = array(), $legacy = false)
 	{
 		$user = JFactory::getUser();
 		$uri  = JURI::getInstance();
@@ -88,7 +119,13 @@ class JHtmlIcon
 			return;
 		}
 
-		JHtml::_('behavior.tooltip');
+		if(version_compare(JVERSION, '3.0', 'ge')){
+			JHtml::_('bootstrap.tooltip');
+			$tip = 'hasTooltip';
+		} else {
+			JHtml::_('behavior.tooltip');
+			$tip = 'hasTip';
+		}
 
 		// Show checked_out icon if the article is checked out by a different user
 		if (property_exists($article, 'checked_out') && property_exists($article, 'checked_out_time') && $article->checked_out > 0 && $article->checked_out != $user->get('id')) {
@@ -96,7 +133,7 @@ class JHtmlIcon
 			$button       = JHtml::_('image', 'system/checked_out.png', null, null, true);
 			$date         = JHtml::_('date', $article->checked_out_time);
 			$tooltip      = JText::_('JLIB_HTML_CHECKED_OUT') . ' :: ' . '<strong>' . JText::sprintf('COM_CONTENT_CHECKED_OUT_BY', $checkoutUser->name) . '</strong>' . ' <br /> ' . $date;
-			return '<span class="hasTip" title="' . htmlspecialchars($tooltip, ENT_COMPAT, 'UTF-8') . '">' . $button . '</span>';
+			return '<span class="' . $tip . '" title="' . htmlspecialchars($tooltip, ENT_COMPAT, 'UTF-8') . '">' . $button . '</span>';
 		}
 
 		$url = 'index.php?option=com_content&task=article.edit&a_id=' . $article->id . '&return=' . base64_encode($uri);
@@ -116,14 +153,24 @@ class JHtmlIcon
 		$overlib .= JText::sprintf('COM_CONTENT_WRITTEN_BY', '<strong>' . htmlspecialchars($author, ENT_COMPAT, 'UTF-8') . '</strong>');
 
 		$icon = $article->state ? 'edit' : 'eye-slash';
-		$text = '<i class="hasTip fa fa-' . $icon . ' tip" title="' . JText::_('COM_CONTENT_EDIT_ITEM') . ' :: ' . $overlib . '"></i> ' . JText::_('JGLOBAL_EDIT');
+		$text = '<i class="' . $tip . ' fa fa-' . $icon . ' tip" title="' . JText::_('COM_CONTENT_EDIT_ITEM') . ' :: ' . $overlib . '"></i> ' . JText::_('JGLOBAL_EDIT');
 
 		$output = JHtml::_('link', JRoute::_($url), $text);
 
 		return $output;
 	}
 
-	public static function print_popup($article, $params, $attribs = array())
+	/**
+	 * Method to generate a popup link to print an article
+	 *
+	 * @param   object     $article  The article information
+	 * @param   JRegistry  $params   The item parameters
+	 * @param   array      $attribs  Optional attributes for the link
+	 * @param   boolean    $legacy   True to use legacy images, false to use icomoon based graphic
+	 *
+	 * @return  string  The HTML markup for the popup link
+	 */
+	public static function print_popup($article, $params, $attribs = array(), $legacy = false)
 	{
 		$url = ContentHelperRoute::getArticleRoute($article->slug, $article->catid);
 		$url .= '&tmpl=component&print=1&layout=default&page=' . @ $request->limitstart;
@@ -144,7 +191,17 @@ class JHtmlIcon
 		return JHtml::_('link', JRoute::_($url), $text, $attribs);
 	}
 
-	public static function print_screen($article, $params, $attribs = array())
+	/**
+	 * Method to generate a link to print an article
+	 *
+	 * @param   object     $article  Not used, @deprecated for 4.0
+	 * @param   JRegistry  $params   The item parameters
+	 * @param   array      $attribs  Not used, @deprecated for 4.0
+	 * @param   boolean    $legacy   True to use legacy images, false to use icomoon based graphic
+	 *
+	 * @return  string  The HTML markup for the popup link
+	 */
+	public static function print_screen($article, $params, $attribs = array(), $legacy = false)
 	{
 		// checks template image directory for image, if non found default are loaded
 		if ($params->get('show_icons')) {

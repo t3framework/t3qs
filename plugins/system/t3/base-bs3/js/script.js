@@ -102,7 +102,7 @@
 			if(window.MooTools && window.MooTools.More && Element && Element.implement){
 
 				var mthide = Element.prototype.hide,
-					mthow = Element.prototype.show,
+					mtshow = Element.prototype.show,
 					mtslide = Element.prototype.slide;
 
 				Element.implement({
@@ -113,7 +113,7 @@
 							return this;
 						}
 
-						return mthow.apply(this, args);
+						return $.isFunction(mtshow) && mtshow.apply(this, args);
 					},
 
 					hide: function(){
@@ -123,7 +123,7 @@
 							return this;
 						}
 
-						return mthide.apply(this, arguments);
+						return $.isFunction(mthide) && mthide.apply(this, arguments);
 					},
 
 					slide: function(args){
@@ -133,7 +133,7 @@
 							return this;
 						}
 
-						return mtslide.apply(this, args);
+						return $.isFunction(mtslide) && mtslide.apply(this, args);
 					}
 				})
 			}
@@ -153,8 +153,8 @@
 		}
 
 		// overwrite default tooltip/popover behavior (same as Joomla 3.1.5)
-		$.fn.tooltip.Constructor.DEFAULTS && ($.fn.tooltip.Constructor.DEFAULTS.html = true);
-		$.fn.popover.Constructor.DEFAULTS && ($.fn.popover.Constructor.DEFAULTS.html = true);
+		$.fn.tooltip.Constructor && $.fn.tooltip.Constructor.DEFAULTS && ($.fn.tooltip.Constructor.DEFAULTS.html = true);
+		$.fn.popover.Constructor && $.fn.popover.Constructor.DEFAULTS && ($.fn.popover.Constructor.DEFAULTS.html = true);
 		$.fn.tooltip.defaults && ($.fn.tooltip.defaults.html = true);
 		$.fn.popover.defaults && ($.fn.popover.defaults.html = true);
 	});
