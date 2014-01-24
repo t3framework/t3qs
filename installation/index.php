@@ -5,6 +5,9 @@
  * @copyright  Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
+ 
+// Added by JoomlArt: no limit for php excution time when installing 
+@set_time_limit (0);
 
 if (version_compare(PHP_VERSION, '5.3.1', '<'))
 {

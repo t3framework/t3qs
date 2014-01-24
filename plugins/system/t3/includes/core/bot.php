@@ -283,4 +283,144 @@ class T3Bot extends JObject
 			}
 		}
 	}
+
+
+	// call when prepare form for template parameter
+	// looking in less/extras folder to render parameters for extended template style
+	public static function prepareForm (&$form) {
+		jimport('joomla.filesystem.folder');
+		jimport('joomla.filesystem.file');
+
+		// load add-ons setting
+		$path = T3_TEMPLATE_PATH . '/less/extras';
+		if (!is_dir ($path)) return ;
+
+		$files = JFolder::files($path, '.less');
+		if (!$files || !count($files)){
+			return ;
+		}
+
+		$extras = array();
+		foreach ($files as $file) {
+			$extras[] = JFile::stripExt($file);
+		}
+		if (count($extras)) {
+			
+			//load languages
+			if(!defined('T3_TEMPLATE')){
+				JFactory::getLanguage()->load(T3_PLUGIN, JPATH_ADMINISTRATOR);
+			}
+
+			$_xml =
+				'<?xml version="1.0"?>
+				<form>
+					<fields name="params">
+						<fieldset name="addon_params" label="T3_ADDON_LABEL" description="T3_ADDON_DESC">
+					    <field type="t3depend" function="@legend" label="T3_ADDON_THEME_EXTRAS_LABEL" description="T3_ADDON_THEME_EXTRAS_DESC" />
+				';
+							foreach ($extras as $extra) {
+								$_xml .= '
+							<field name="theme_extras_'.$extra.'" global="1" type="menuitem" multiple="true" default="" label="'.$extra.'" description="'.$extra.'" published="true" class="t3-extra-setting">
+									<option value="-1">T3_ADDON_THEME_EXTRAS_ALL</option>
+									<option value="0">T3_ADDON_THEME_EXTRAS_NONE</option>
+							</field>';
+							}
+
+							$_xml .= '
+						</fieldset>
+					</fields>
+				</form>
+				';
+			$xml = simplexml_load_string($_xml);
+			$form->load ($xml, false);
+		}
+	}
+
+	public static function extraFields(&$form, $data, $tplpath){
+		
+		if ($form->getName() == 'com_categories.categorycom_content' || $form->getName() == 'com_content.article') {
+			
+			jimport('joomla.filesystem.folder');
+			jimport('joomla.filesystem.file');
+
+			// check for extrafields overwrite
+			$path = $tplpath . '/etc/extrafields';
+			if (!is_dir ($path)) return ;
+
+			$files = JFolder::files($path, '.xml');
+			if (!$files || !count($files)){
+				return ;
+			}
+
+			$extras = array();
+			foreach ($files as $file) {
+				$extras[] = JFile::stripExt($file);
+			}
+			if (count($extras)) {
+
+				if ($form->getName() == 'com_categories.categorycom_content'){
+					
+					//load languages
+					if(!defined('T3_TEMPLATE')){
+						JFactory::getLanguage()->load(T3_PLUGIN, JPATH_ADMINISTRATOR);
+					}
+
+					$_xml =
+						'<?xml version="1.0"?>
+						<form>
+							<fields name="params">
+								<fieldset name="t3_extrafields_params" label="T3_EXTRA_FIELDS_GROUP_LABEL" description="T3_EXTRA_FIELDS_GROUP_DESC">
+									<field name="t3_extrafields" type="list" default="" show_none="true" label="T3_EXTRA_FIELDS_LABEL" description="T3_EXTRA_FIELDS_DESC">
+										<option value="">JNONE</option>';
+									
+									foreach ($extras as $extra) {
+										$_xml .= '<option value="' . $extra . '">' . ucfirst($extra) . '</option>';
+									}
+
+									$_xml .= '
+									</field>
+								</fieldset>
+							</fields>
+						</form>
+						';
+					$xml = simplexml_load_string($_xml);
+					$form->load ($xml, false);
+
+				} else {
+					
+					$app   = JFactory::getApplication();
+					$input = $app->input;
+					$fdata = empty($data) ? $input->post->get('jform', array(), 'array') : (is_object($data) ? $data->getProperties() : $data);
+					$catid = $input->getInt('catid', $app->getUserState('com_content.articles.filter.category_id'));
+
+					if(!$catid && is_array($fdata) && !empty($fdata)){
+						$catid = $fdata['catid'];
+					}
+
+					if($catid){
+
+						if(version_compare(JVERSION, '3.0', 'lt')){
+							jimport('joomla.application.categories');
+						}
+
+						$categories = JCategories::getInstance('Content', array('countItems' => 0 ));
+						$category = $categories->get($catid);
+						$params = $category->params;
+						if(!$params instanceof JRegistry) {
+							$params = new JRegistry;
+							$params->loadString($category->params);
+						}
+
+						if($params instanceof JRegistry){
+							$extrafile = $path . '/' . $params->get('t3_extrafields') . '.xml';
+							if(is_file($extrafile)){
+								JForm::addFormPath($path);
+								$form->loadFile($params->get('t3_extrafields'), false);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

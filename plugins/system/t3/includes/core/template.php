@@ -37,6 +37,7 @@ class T3Template extends ObjectExtendable
 	protected $devices      = array('default', 'wide', 'normal', 'xtablet', 'tablet', 'mobile');
 	protected $maxcol       = array('default' => 6, 'wide' => 6, 'normal' => 6, 'xtablet' => 4, 'tablet' => 3, 'mobile' => 2);
 	protected $minspan      = array('default' => 2, 'wide' => 2, 'normal' => 2, 'xtablet' => 3, 'tablet' => 4, 'mobile' => 6);
+	protected $prefixes     = array('span');
 
 	/**
 	 * Current template instance
@@ -74,6 +75,7 @@ class T3Template extends ObjectExtendable
 		$this->devices      = json_decode(T3_BASE_DEVICES, true);
 		$this->maxcol       = json_decode(T3_BASE_DV_MAXCOL, true);
 		$this->minspan      = json_decode(T3_BASE_DV_MINWIDTH, true);
+		$this->prefixes     = json_decode(T3_BASE_DV_PREFIX, true);
 
 		// layout settings
 		$this->_layoutsettings = new JRegistry;
@@ -193,7 +195,23 @@ class T3Template extends ObjectExtendable
 		JDispatcher::getInstance()->trigger('onT3LoadLayout', array(&$path, $layout));
 
 		if (is_file($path)) {
-			include $path;
+
+			if($this->responcls && !$this->getParam('responsive', 1)){
+
+				ob_start();
+				include $path;
+				$buffer = ob_get_contents();
+				ob_end_clean();
+
+				//replace
+				$buffer = preg_replace_callback('@class\s?=\s?(\'|")(([^\'"]*)(' . implode('|', $this->prefixes) . ')+([^\'"]*))(\'|")@m', array($this, 'responCls'), $buffer);
+
+				//output
+				echo $buffer;
+
+			} else {
+				include $path;	
+			}
 
 			// append modules in debug position
 			if ($this->getParam('snippet_debug', 0) && $this->countModules('debug')) {
@@ -397,7 +415,7 @@ class T3Template extends ObjectExtendable
 					$defcls = $clayout[$col];
 					if(preg_match($this->spancls, $defcls, $match)){
 						$width = array_pop(array_filter($match, 'is_numeric'));
-						$width = (isset($width[0]) ? $width[0] : $this->maxgrid);
+						$width = ($width ? $width : $this->maxgrid);
 					}
 				}
 
@@ -415,6 +433,43 @@ class T3Template extends ObjectExtendable
 
 			return $width[$col];
 		}
+	}
+
+	/**
+	 * Get layout column class
+	 * @param  object  $layout  Layout configuration object
+	 * @param  number  $col     Column number, start from 0
+	 *
+	 * @return string  Block content
+	 */
+	function responCls($class)
+	{
+		$result = $class[2];
+		$queue  = array();
+		
+		//remove all width classes
+		foreach ($this->prefixes as $prefix) {
+			if($result && preg_match_all('@' . preg_quote($prefix) . '[^\s]*@', $result, $match)){
+				$result = preg_replace('@' . preg_quote($prefix) . '[^\s]*@', ' ', $result);
+
+				foreach ($match[0] as $m) {
+					$parts = preg_split('@(\d+)@', $m, -1, PREG_SPLIT_DELIM_CAPTURE);
+					$parts[0] = str_replace($prefix, $this->nonrspprefix, $parts[0]);
+					if(!isset($queue[$parts[0]])){
+						$queue[$parts[0]] = $parts[1];
+					}
+				}
+			}
+		}
+
+		if(!empty($queue)){
+			$result = trim($result); //would be better than preg_replace ?
+			foreach ($queue as $key => $value) {
+				$result .= ' ' . $key . $value;	
+			}
+		}
+
+		return 'class="' . trim($result) . '"';
 	}
 
 
@@ -850,6 +905,8 @@ class T3Template extends ObjectExtendable
 
 		// As joomla 3.0 bootstrap is buggy, we will not use it
 		$this->addScript(T3_URL . '/bootstrap/js/bootstrap.js');
+		// a jquery tap plugin
+		$this->addScript(T3_URL . '/js/jquery.tap.min.js');
 
 		// add css/js for off-canvas
 		if ($offcanvas && ($this->responcls || $responsive)) {
@@ -869,6 +926,7 @@ class T3Template extends ObjectExtendable
 			$this->addScript(T3_URL . '/js/responsive.js');
 		}
 
+		//some helper javascript functions for frontend edit
 		if($frontedit){
 			$this->addScript(T3_URL . '/js/frontend-edit.js');
 		}
@@ -886,10 +944,11 @@ class T3Template extends ObjectExtendable
 	function updateHead()
 	{
 		//state parameters
-		$devmode = $this->getParam('devmode', 0);
+		$devmode    = $this->getParam('devmode', 0);
 		$themermode = $this->getParam('themermode', 1) && defined('T3_THEMER');
-		$theme = $this->getParam('theme', '');
-		$minify = $this->getParam('minify', 0);
+		$theme      = $this->getParam('theme', '');
+		$minify     = $this->getParam('minify', 0);
+		$minifyjs   = $this->getParam('minify_js', 0);
 
 		// As Joomla 3.0 bootstrap is buggy, we will not use it
 		// We also prevent both Joomla bootstrap and T3 bootsrap are loaded
@@ -930,7 +989,8 @@ class T3Template extends ObjectExtendable
 		foreach ($doc->_scripts as $url => $script) {
 			$replace = false;
 
-			if ((strpos($url, '//ajax.googleapis.com/ajax/libs/jquery/') !== false && preg_match_all('@/jquery/(\d+(\.\d+)*)?/@msU', $url, $jqver)) ||
+			if ((strpos($url, '//ajax.googleapis.com/ajax/libs/jquery/') !== false &&
+					preg_match_all('@/jquery/(\d+(\.\d+)*)?/@msU', $url, $jqver)) ||
 				(preg_match_all('@(^|\/)jquery([-_]*(\d+(\.\d+)+))?(\.min)?\.js@i', $url, $jqver))) {
 
 				$idx = strpos($url, '//ajax.googleapis.com/ajax/libs/jquery/') !== false ? 1 : 3;
@@ -958,15 +1018,14 @@ class T3Template extends ObjectExtendable
 		$is_rtl = ($dir == 'rtl');
 
 		// not in devmode and in default theme, do nothing
-		if (!$devmode && !$themermode && !$theme && !$minify && !$is_rtl) {
+		if (!($devmode || $themermode || $theme || $minify || $minifyjs || $is_rtl)) {
 			return;
 		}
 
 		//Update css/less based on devmode and themermode
 		$root        = JURI::root(true);
 		$current     = JURI::current();
-		$regex       = '@' . preg_quote(T3_TEMPLATE_URL) . '/css/(rtl/)?([^/]*)\.css((\?|\#).*)?$@i';
-
+		$regex       = '@' . preg_quote(T3_TEMPLATE_URL) . '/css/(rtl/)?(.*)\.css((\?|\#).*)?$@i';
 		$stylesheets = array();
 
 		foreach ($doc->_styleSheets as $url => $css) {
@@ -1001,9 +1060,14 @@ class T3Template extends ObjectExtendable
 		$doc->_styleSheets = $stylesheets;
 
 		//only check for minify if devmode is disabled
-		if (!$devmode && $minify) {
+		if (!$devmode && ($minify || $minifyjs)) {
 			T3::import('core/minify');
-			T3Minify::optimizecss($this);
+			if($minify){
+				T3Minify::optimizecss($this);
+			}
+			if($minifyjs){
+				T3Minify::optimizejs($this);
+			}
 		}
 	}
 
@@ -1066,6 +1130,27 @@ class T3Template extends ObjectExtendable
 							}
 						}
 					}
+				}
+			}
+		}
+
+		// template extended styles
+		$aparams = $this->_tpl->params->toArray();
+		$extras = array();
+		$itemid = JFactory::getApplication()->input->get ('Itemid');
+		foreach ($aparams as $name => $value) {
+			if (preg_match ('/^theme_extras_(.+)$/', $name, $m)) {
+				$extras[$m[1]] = $value;
+			}
+		}
+		if (count ($extras)) {
+			foreach ($extras as $extra => $pages) {
+				if (!is_array($pages) || !count($pages) || in_array (0, $pages)) {
+					continue; // disabled
+				}
+				if (in_array (-1, $pages) || in_array($itemid, $pages)) {
+					// load this style
+					$this->addCss ('extras/'.$extra);
 				}
 			}
 		}

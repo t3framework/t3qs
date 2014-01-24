@@ -23,8 +23,8 @@
 				$('<style type="text/css">' +
 						'.t3-megamenu.animate .animating > .mega-dropdown-menu,' +
 						'.t3-megamenu.animate.slide .animating > .mega-dropdown-menu > div {' +
-							'transition-duration: ' + mm_duration + 'ms;' +
-							'-webkit-transition-duration: ' + mm_duration + 'ms;' +
+							'transition-duration: ' + mm_duration + 'ms !important;' +
+							'-webkit-transition-duration: ' + mm_duration + 'ms !important;' +
 						'}' +
 					'</style>').appendTo ('head');
 			}
@@ -77,6 +77,10 @@
 						align_offset = 0,
 						align_delta = 0,
 						align_trans = 0;
+
+					if(align == 'justify'){
+						return;	//do nothing
+					}
 
 					if(!align){
 						align = 'left';
@@ -206,7 +210,7 @@
 
 					clearTimeout ($this.data('animatingTimeout'));
 					$this.data('animatingTimeout', 
-						setTimeout(function(){$this.removeClass ('animating')}, mm_timeout + 10));
+						setTimeout(function(){$this.removeClass ('animating')}, mm_timeout + 50));
 
 					clearTimeout ($this.data('hoverTimeout'));
 					$this.data('hoverTimeout', 

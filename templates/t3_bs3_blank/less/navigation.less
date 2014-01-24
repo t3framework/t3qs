@@ -98,7 +98,7 @@
 
 // Caret to indicate there is a submenu
 .dropdown-submenu > a:after {
-  border-left-color: darken(@dropdown-bg, 20%);
+  border-left-color: @dropdown-link-color;
 }
 
 .dropdown-submenu:hover > a:after {
@@ -145,6 +145,14 @@
       padding-bottom: ((@navbar-height - @line-height-computed) / 2);
     }
   }
+
+  > li > span {
+    @media (max-width: @screen-sm-max) {
+      padding: @nav-link-padding;
+      display: inline-block;
+    }
+  }
+
 
   // Open dropdowns
   .open > a {
@@ -401,77 +409,4 @@
     }
   }
 
-}
-
-
-
-//
-// PANELS (panels.less)
-// --------------------------------------------------
-// Base class
-.panel {
-}
-
-// Panel contents
-.panel-body {
-}
-
-
-// Optional heading
-.panel-heading {
-  > .dropdown .dropdown-toggle {
-    color: inherit;
-  }
-}
-
-// Within heading, strip any `h*` tag of it's default margins for spacing.
-.panel-title {
-  > a {
-    color: inherit;
-  }
-}
-
-// Optional footer (stays gray in every modifier class)
-.panel-footer {
-}
-
-
-// Collapsable panels (aka, accordion)
-.panel-group {
-
-  .panel {
-    + .panel {
-    }
-  }
-
-  .panel-heading {
-    + .panel-collapse .panel-body {
-    }
-  }
-
-  .panel-footer {
-    + .panel-collapse .panel-body {
-    }
-  }
-
-}
-
-
-// Contextual variations
-.panel-default {
-}
-
-.panel-primary {
-}
-
-.panel-success {
-}
-
-.panel-warning {
-}
-
-.panel-danger {
-}
-
-.panel-info {
 }
