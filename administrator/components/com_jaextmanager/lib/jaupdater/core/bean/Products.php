@@ -293,7 +293,7 @@ XML;
 		$fileBackup = $this->doBackup();
 		
 		//upgrade process
-		$workingDir = $FileSystemHelper->tmpDir(null, 'ja', 0777);
+		$workingDir = $FileSystemHelper->tmpDir(null, 'ja', 0755);
 		$zipFile = $workingDir . $this->extKey . ".zip";
 		JFile::copy($upgradePackage, $zipFile);
 		
@@ -331,7 +331,7 @@ XML;
 		//auto backup when recovery
 		$this->doBackup();
 		// upgrade process
-		$workingDir = $FileSystemHelper->tmpDir(null, 'ja', 0777);
+		$workingDir = $FileSystemHelper->tmpDir(null, 'ja', 0755);
 		$zipFile = $folder . $file;
 		
 		ArchiveHelper::unZip($zipFile, $workingDir);
@@ -820,7 +820,7 @@ XML;
 			if (is_object($item)) {
 				$subPath = $path . $k.'/';
 				$relativeSubPath = $relativePath . $k . "/";
-				$FileSystemHelper->createDirRecursive($subPath, 0777);
+				$FileSystemHelper->createDirRecursive($subPath, 0755);
 				
 				$subConflicted = $this->_doBackupConflictedFiles($subPath, $relativeSubPath, $item);
 				if ($subConflicted) {
@@ -846,9 +846,9 @@ XML;
 	{
 		$config = $this->config;
 		$FileSystemHelper = new FileSystemHelper();
-		$workingDir = $FileSystemHelper->tmpDir(null, 'ja', 0777);
+		$workingDir = $FileSystemHelper->tmpDir(null, 'ja', 0755);
 		$workingDir .= $this->extKey.'/';
-		if (JFolder::create($workingDir, 0777) === false) {
+		if (JFolder::create($workingDir, 0755) === false) {
 			return false;
 		}
 		$backupDir = $this->getBackupPath();
@@ -860,9 +860,9 @@ XML;
 		$cnt = count($locations);
 		foreach ($locations as $name => $path) {
 			if ($name != 'location')
-				$FileSystemHelper->cp($path, $workingDir . $name, true, 0777);
+				$FileSystemHelper->cp($path, $workingDir . $name, true, 0755);
 			else
-				$FileSystemHelper->cp($path, $workingDir, true, 0777);
+				$FileSystemHelper->cp($path, $workingDir, true, 0755);
 		}
 		
 		$this->_backupLanguages($workingDir);
@@ -929,7 +929,7 @@ XML;
 		if (JFile::exists($srcFile)) {
 			$dstFolder = $workingDir . "lang/site/";
 			$dstFile = $dstFolder . $languageFile;
-			if (JFolder::create($dstFolder, 0777) !== false) {
+			if (JFolder::create($dstFolder, 0755) !== false) {
 				JFile::copy($srcFile, $dstFile);
 			}
 		}
@@ -938,7 +938,7 @@ XML;
 		if (JFile::exists($srcFile)) {
 			$dstFolder = $workingDir . "lang/admin/";
 			$dstFile = $dstFolder . $languageFile;
-			if (JFolder::create($dstFolder, 0777) !== false) {
+			if (JFolder::create($dstFolder, 0755) !== false) {
 				JFile::copy($srcFile, $dstFile);
 			}
 		}
@@ -951,7 +951,7 @@ XML;
 		$config = $this->config;
 		
 		if ($this->type == 'component') {
-			if (JFolder::create($workingDir . "db", 0777) !== false) {
+			if (JFolder::create($workingDir . "db", 0755) !== false) {
 				$workingDir .= "db/";
 			}
 			

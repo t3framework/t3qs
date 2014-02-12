@@ -27,12 +27,12 @@ function jaucRaiseMessage($message, $error = false)
 
 $errMsg = "";
 if (!JFolder::exists(JA_WORKING_DATA_FOLDER)) {
-	if (!JFolder::create(JA_WORKING_DATA_FOLDER, 0777)) {
+	if (!JFolder::create(JA_WORKING_DATA_FOLDER, 0755)) {
 		$errMsg .= "JA Updater can not create below folder automatically. Please manual create and chmod it to wriable!" . "<br />";
 		$errMsg .= "<i>" . JA_WORKING_DATA_FOLDER . "</i>";
 	}
 } elseif (!is_writeable(JA_WORKING_DATA_FOLDER)) {
-	if (!chmod(JA_WORKING_DATA_FOLDER, 0777)) {
+	if (!chmod(JA_WORKING_DATA_FOLDER, 0755)) {
 		$errMsg .= "JA Updater can not automatically chmod for below folder to wriable. Please manual chmod it to wriable!" . "<br />";
 		$errMsg .= "<i>" . JA_WORKING_DATA_FOLDER . "</i>";
 	}

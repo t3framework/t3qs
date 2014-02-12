@@ -98,7 +98,7 @@ class jaMysqlHelper
 			return false;
 		}
 		//create temp file with replaced #__ by db prefix
-		$tmpDir = $FileSystemHelper->tmpDir(null, 'ja', 0777);
+		$tmpDir = $FileSystemHelper->tmpDir(null, 'ja', 0755);
 		$tmpFile = $tmpDir . basename($backupFile);
 		$sql = file_get_contents($backupFile);
 		$sql = preg_replace('/\`\#__([a-zA-Z_0-9]*)\`/', "`" . $this->_prefix . "$1`", $sql);

@@ -704,9 +704,9 @@ class UpdaterClient
 				$vResult = $compare->checkToBuildUpgradePackage($oldPro, $vUpgrade);
 			}
 			
-			$tmpDir = $FileSystemHelper->tmpDir(null, 'ja', 0777);
+			$tmpDir = $FileSystemHelper->tmpDir(null, 'ja', 0755);
 			$tmpDir = $tmpDir . $oldPro->extKey.'/';
-			if (JFolder::create($tmpDir, 0777) === false) {
+			if (JFolder::create($tmpDir, 0755) === false) {
 				jaucRaiseMessage("UpdaterService: cannot build upgrade package", true);
 				return false;
 			}
@@ -732,7 +732,7 @@ class UpdaterClient
 		
 		if (JFolder::exists($src)) {
 			if (!JFolder::exists($dst)) {
-				JFolder::create($dst, 0777);
+				JFolder::create($dst, 0755);
 			}
 			$dir = opendir($src);
 			while (false !== ($file = readdir($dir))) {
@@ -1010,7 +1010,7 @@ class UpdaterClient
 		$FileSystemHelper = new FileSystemHelper();
 		$path = $this->getLocalBasePath($product) . "patch/";
 		if (!JFolder::exists($path)) {
-			if (!$FileSystemHelper->createDirRecursive($path, 0777)) {
+			if (!$FileSystemHelper->createDirRecursive($path, 0755)) {
 				return false;
 			}
 		}
@@ -1023,7 +1023,7 @@ class UpdaterClient
 		$FileSystemHelper = new FileSystemHelper();
 		$path = $this->getLocalBasePath($product) . "backup/";
 		if (!JFolder::exists($path)) {
-			if (!$FileSystemHelper->createDirRecursive($path, 0777)) {
+			if (!$FileSystemHelper->createDirRecursive($path, 0755)) {
 				return false;
 			}
 		}
@@ -1042,7 +1042,7 @@ class UpdaterClient
 		//store same folder with backup files
 		$path = $this->getLocalBasePath($product) . "backup/".$folder.'/';
 		if (!JFolder::exists($path)) {
-			if (!$FileSystemHelper->createDirRecursive($path, 0777)) {
+			if (!$FileSystemHelper->createDirRecursive($path, 0755)) {
 				return false;
 			}
 		}
@@ -1055,7 +1055,7 @@ class UpdaterClient
 		$FileSystemHelper = new FileSystemHelper();
 		$path = $this->getLocalBasePath($product) . "backup/";
 		if (!JFolder::exists($path)) {
-			if (!$FileSystemHelper->createDirRecursive($path, 0777)) {
+			if (!$FileSystemHelper->createDirRecursive($path, 0755)) {
 				return false;
 			}
 		}

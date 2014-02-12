@@ -229,6 +229,7 @@ class JaextmanagerModelDefault extends JAEMModel
 		$query = "
 			SELECT COUNT(extension_id) FROM #__extensions 
 			WHERE (`type` = " . $db->Quote($type) . " OR '' = " . $db->Quote($type) . ")
+			AND `element` NOT LIKE '%jaupdater.%'
 			{$sFilter}
 		";
 		$db->setQuery($query);
@@ -263,9 +264,10 @@ class JaextmanagerModelDefault extends JAEMModel
 					element, client_id, folder 
 				FROM #__extensions 
 				WHERE (`type` = " . $db->Quote($type) . " OR '' = " . $db->Quote($type) . ")
-				{$sFilter} 
+				AND `element` NOT LIKE '%jaupdater.%'
+				{$sFilter}
 				GROUP BY extension_id
-				ORDER BY `type`, name
+				ORDER BY `type`, `name`
 				LIMIT {$limitstart}, {$limit}";
 		//echo nl2br($query);
 		//die($query);

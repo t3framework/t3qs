@@ -53,12 +53,12 @@ function jaucValidServiceSettings($params)
 {
 	$errMsg = "";
 	if (!JFolder::exists(JA_WORKING_DATA_FOLDER)) {
-		if (!JFolder::create(JA_WORKING_DATA_FOLDER, 0777)) {
+		if (!JFolder::create(JA_WORKING_DATA_FOLDER, 0755)) {
 			$errMsg .= JText::_("JA_UPDATER_CAN_NOT_CREATE_BELOW_FOLDER_AUTOMATICALLY_PLEASE_MANUAL_DO_IT") . "<br />";
 			$errMsg .= "<i>" . JA_WORKING_DATA_FOLDER . "</i>";
 		}
 	} elseif (!is_writeable(JA_WORKING_DATA_FOLDER)) {
-		if (!chmod(JA_WORKING_DATA_FOLDER, 0777)) {
+		if (!chmod(JA_WORKING_DATA_FOLDER, 0755)) {
 			$errMsg .= JText::_("JA_UPDATER_CAN_NOT_AUTOMATICALLY_CHMOD_FOR_BELOW_FOLDER_TO_WRIABLE_PLEASE_MANUAL_DO_IT") . "<br />";
 			$errMsg .= "<i>" . JA_WORKING_DATA_FOLDER . "</i>";
 		}
