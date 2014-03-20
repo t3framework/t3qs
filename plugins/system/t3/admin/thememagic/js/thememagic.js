@@ -730,7 +730,13 @@ var T3Theme = window.T3Theme || {};
 									break;
 								}
 							}
-							
+
+							try {
+								delete T3Theme.themes[result.theme];
+							} catch(e){
+								T3Theme.themes[result.theme] = null;
+							}
+
 							jel.options[0].selected = true;					
 							T3Theme.changeTheme(jel.options[0].value);
 						break;

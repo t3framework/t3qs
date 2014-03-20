@@ -39,7 +39,7 @@ var JCaption = function(_selector) {
                 "width" : width
             }
         });
-        $el.before($container);
+        $el.before($container, $el);
         $container.append($el);
         if (caption !== "") {
             $container.append($p);

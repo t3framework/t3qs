@@ -18,12 +18,17 @@
 
 // Always Show Submenu
 // ---------------------------------------------------------
-@media (max-width: @grid-float-breakpoint) {
+@media (max-width: @grid-float-breakpoint-max) {
   // Always show submenu for navigation
   .always-show .mega > .mega-dropdown-menu,
   .always-show .dropdown-menu {
     display: block !important;
     position: static;
+  }
+
+  // alway show all submenu for open dropdown in collapse menu
+  .open .dropdown-menu {
+    display: block;
   }
 }
 
@@ -79,3 +84,37 @@
 }
 
 
+// Logo control class
+// ---------------------------------------------------------
+.logo-control {
+  @media (max-width: @grid-float-breakpoint-max) {
+    .logo-img-sm {
+      display: block;
+    }
+    .logo-img {
+      display: none;
+    }
+  }
+
+  @media (min-width: @grid-float-breakpoint) {
+    .logo-img-sm {
+      display: none;
+    }
+    .logo-img {
+      display: block;
+    }
+  }
+}
+
+
+// 3rd party extension core compatible
+// ---------------------------------------------------------
+// JomSocial
+#community-wrap {
+  .collapse {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    display: block;
+  }  
+}

@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 require_once JPATH_SITE.'/components/com_content/helpers/route.php';
+require_once JPATH_LIBRARIES . '/legacy/categories/categories.php';
 
 /**
  * Helper for mod_articles_categories

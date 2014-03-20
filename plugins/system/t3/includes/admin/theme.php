@@ -47,7 +47,12 @@ class T3AdminTheme
 		$theme = JFactory::getApplication()->input->getCmd('theme');
 		$from = JFactory::getApplication()->input->getCmd('from');
 		if (!$theme) {
-		   return self::error(JText::_('T3_TM_INVALID_DATA_TO_SAVE'));
+		  return self::error(JText::_('T3_TM_INVALID_DATA_TO_SAVE'));
+		}
+
+		//incase empty from
+		if(!$from){
+			$from = 'base';
 		}
 
 		$file = $path . '/less/themes/' . $theme . '/variables-custom.less';
@@ -64,7 +69,7 @@ class T3AdminTheme
 			$type = 'overwrite';
 		} else {
 
-			if(JFolder::exists($path . '/less/themes/' . $from)){
+			if($theme != $from && JFolder::exists($path . '/less/themes/' . $from)){
 				if(@JFolder::copy($path . '/less/themes/' . $from, $path . '/less/themes/' . $theme) != true){
 					return self::error(JText::_('T3_TM_NOT_FOUND'));
 				}
@@ -406,9 +411,16 @@ class T3AdminTheme
 				}
 			}
 
+			//workaround for bootstrap icon path
+			$sparams = new JRegistry;
+			if(defined('T3_BASE_RSP_IN_CLASS') && T3_BASE_RSP_IN_CLASS){
+				$sparams->set('icon-font-path', '"' . JUri::base() . 'plugins/system/t3/base-bs3/bootstrap/fonts/"');
+			}
+
 			$jdoc->addScriptDeclaration('
 				var T3Theme = window.T3Theme || {};
 				T3Theme.vars = ' . json_encode($params->toArray()) . ';
+				T3Theme.svars = ' . json_encode($sparams->toArray()) . ';
 				T3Theme.others = ' . json_encode($themeinfo) . ';
 				T3Theme.theme = \'' . $theme . '\';
 				T3Theme.template = \'' . T3_TEMPLATE . '\';
